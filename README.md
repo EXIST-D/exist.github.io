@@ -1,13 +1,36 @@
-# 个人博客与项目作品集
+# EXIST-D 个人博客与项目作品集
 
-一个适合放在简历里的个人站，基于 Astro，支持：
+这是一个基于 Astro 的静态个人站点，部署在 GitHub Pages 上。
 
-- 首页个人介绍与精选项目
-- 学习笔记列表与详情
-- 项目案例列表与详情
-- 在线编辑入口
-- RSS、sitemap、robots
-- 可继续扩展为作品集或技术博客
+## 站点功能
+
+- 首页个人介绍
+- 学习笔记列表与详情页
+- 项目作品列表与详情页
+- 专题页
+- RSS / sitemap / robots
+- `/admin/` 在线编辑器
+
+## 在线编辑
+
+当前网站内置了一个自研的在线编辑器：
+
+- 支持 Markdown
+- 支持 LaTeX / KaTeX 公式
+- 支持左侧文件列表、中间编辑、右侧实时预览
+- 支持直接保存回 GitHub 仓库
+
+### 权限规则
+
+- 只有 GitHub 登录用户 `EXIST-D` 可以保存
+- 其他人即使打开编辑器，也需要你授权后才能写入
+- Token 只保存在本地浏览器中，不会上传到站点
+
+### 打开方式
+
+访问：
+
+- `https://exist-d.github.io/exist.github.io/admin/`
 
 ## 本地运行
 
@@ -22,27 +45,16 @@ npm run dev
 npm run build
 ```
 
-## 最先需要改的地方
+## 主要可编辑内容
 
-1. 修改 `src/site.config.ts`
-   这里放你的名字、求职方向、GitHub、邮箱、地点、是否开放求职、简历链接。
-2. 替换 `src/content/projects`
-   每个 Markdown 文件就是一个项目案例。
-3. 替换 `src/content/notes`
-   每个 Markdown 文件就是一篇学习笔记。
-4. 修改 `astro.config.mjs`
-   把 `site` 改成你自己的正式域名。
-5. 如果要在线编辑，打开 `/admin/`
-   页面会引导你进入 Pages CMS；笔记和项目正文都支持 Markdown 与 LaTeX。
+- `src/content/notes/`
+- `src/content/projects/`
+- `src/content/site/`
+- `src/pages/`
+- `src/components/`
+- `src/styles/`
 
-## 推荐上线方式
+## 备注
 
-- Vercel
-- Netlify
-- GitHub Pages
-
-如果你后面要接真实域名，建议先完成：
-
-- 把 `siteConfig.site` 改成真实地址
-- 把 `siteConfig.resumeUrl` 换成在线简历或 PDF 地址
-- 把示例内容替换成真实项目与笔记
+- 这是一个项目页仓库，站点实际地址带有 `/exist.github.io/` 前缀。
+- 如果你以后迁移到自定义域名，需要同步修改 `astro.config.mjs` 和站内链接。

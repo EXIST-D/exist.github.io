@@ -1,34 +1,52 @@
-# 网页内编辑
+# 在线编辑说明
 
-这个项目当前以 Pages CMS 作为在线编辑入口，正文采用 Markdown 原文保存，并支持直接书写 LaTeX 公式。
+当前仓库使用站内自研编辑器作为在线写作入口。
 
-## 推荐使用方式
+## 入口
 
-1. 打开 [https://app.pagescms.org](https://app.pagescms.org)
-2. 使用 GitHub 账号登录
-3. 选择仓库 `EXIST-D/exist.github.io`
-4. Pages CMS 会自动读取仓库根目录下的 `.pages.yml`
-5. 直接在网页中编辑：
-   - `学习笔记`
-   - `项目作品`
-   - `站点基础信息`
-   - `首页文案`
+- `https://exist-d.github.io/exist.github.io/admin/`
 
-## Markdown 和 LaTeX 写法
+## 能做什么
 
-- 普通段落、标题、列表、链接都按 Markdown 写。
-- 行内公式写成 `$E=mc^2$`。
-- 块级公式写成：
+- 选择左侧文件
+- 在中间区域直接编辑 Markdown
+- 右侧实时查看渲染结果
+- 使用 KaTeX 书写数学公式
+- 新建笔记或项目
+- 保存到 GitHub 仓库
+
+## 语法
+
+- 普通 Markdown：标题、列表、引用、链接、代码块都可用
+- 行内公式：`$E=mc^2$`
+- 块级公式：
 
 ```md
 $$
-\int_0^1 x^2 dx
+\int_0^1 x^2 \, dx
 $$
 ```
 
-## 权限说明
+## 权限
 
-- 只有 GitHub 仓库协作者可以提交修改。
-- 如果你要给别人写权限，需要在 GitHub 仓库设置里单独授权。
-- 建议同时把 `main` 分支设为受保护分支，避免未授权直写。
+- 只有登录为 `EXIST-D` 的 GitHub 账号可以保存
+- 编辑器会要求你在浏览器里粘贴 GitHub Token
+- Token 只保存在本地浏览器 `localStorage`
+- 其他人需要你授权后，才能使用相同仓库写入权限
 
+## 当前编辑范围
+
+v1 先覆盖以下内容：
+
+- `src/content/notes/*.md`
+- `src/content/projects/*.md`
+
+如果后续需要，还可以继续扩展到：
+
+- `src/content/site/*.json`
+- `src/pages/*.astro`
+- `src/components/*.astro`
+
+## 说明
+
+这是一个 GitHub Pages 静态站点，编辑完成后会直接保存回仓库，并由 GitHub Actions 重新构建和发布。

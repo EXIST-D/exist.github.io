@@ -13,7 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "astro": "^5.13.11",
+    "gray-matter": "^4.0.3",
     "katex": "^0.16.45",
+    "markdown-it": "^14.1.1",
+    "markdown-it-katex": "^2.0.3",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0"
   }
