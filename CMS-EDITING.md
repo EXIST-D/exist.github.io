@@ -6,7 +6,7 @@
 
 1. 打开 [https://app.pagescms.org](https://app.pagescms.org)
 2. 使用 GitHub 账号登录
-3. 选择仓库 `hsq20030518/repository`
+3. 选择仓库 `EXIST-D/exist.github.io`
 4. Pages CMS 会自动读取仓库根目录下的 `.pages.yml`
 5. 直接在网页中编辑：
    - `学习笔记`
@@ -23,3 +23,4 @@
 ## 已保留的旧方案
 
 仓库中仍保留了 Decap CMS 相关文件，但当前更推荐直接使用 Pages CMS，不再依赖 `/admin` 登录链路。
+

@@ -1,60 +1,88 @@
 {
-  "site": "https://exist-d.github.io/exist.github.io/",
-  "name": "王明旭",
-  "role": "数据工程 / 大模型开发方向求职者",
-  "headline": "把项目做成案例，把学习过程沉淀成公开资产。",
-  "title": "邢巾巾 | 学习笔记与项目作品",
-  "description": "一个适合放在简历中的个人站，集中展示学习笔记、项目作品、技术方向和长期成长记录。",
-  "intro": "我把学习过程写成笔记，把项目实践整理成作品档案。这里既是博客，也是一个能让面试官快速理解我能力结构的个人工作台。",
-  "email": "2112201430@qq.com",
-  "github": "https://github.com/hsq20030518",
-  "resumeUrl": "",
-  "location": "北京 / 远程",
-  "availability": "可实习 / 校招 / 社招岗位",
-  "focusAreas": [
-    "React / TypeScript 组件化开发",
-    "Node.js 服务与接口设计",
-    "前端性能、可维护性与工程化"
-  ],
-  "skillGroups": [
-    {
-      "title": "前端",
-      "items": ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Astro"]
-    },
-    {
-      "title": "工程化",
-      "items": ["Git", "Vite", "ESLint", "Prettier", "自动化部署"]
-    },
-    {
-      "title": "后端与数据",
-      "items": ["Node.js", "REST API", "MySQL", "Supabase"]
-    }
-  ],
-  "principles": [
-    "学习内容不只记录结论，也记录踩坑和取舍。",
-    "项目展示优先解释目标、难点、技术方案和实际结果。",
-    "页面设计追求克制和可读性，让信息本身成为主角。"
-  ],
-  "timeline": [
-    {
-      "period": "现在",
-      "title": "持续维护个人站与项目案例",
-      "description": "把零散的学习材料整理成长期可访问、可更新、可在简历中引用的公开内容。"
-    },
-    {
-      "period": "最近一年",
-      "title": "围绕前端与全栈项目打磨交付能力",
-      "description": "重点提升组件设计、接口协作、性能优化和真实项目表达能力。"
-    },
-    {
-      "period": "下一步",
-      "title": "补充真实项目、上线独立域名、持续写作",
-      "description": "把这个站点从模板升级为你的长期职业主页。"
-    }
-  ],
-  "contactLinks": [
-    { "label": "代码仓库", "href": "https://github.com/EXIST-D" },
-    { "label": "邮箱", "href": "wangmingxu_2001@163.com" },
-    { "label": "订阅", "href": "/rss.xml" }
-  ]
+    "site":  "https://exist-d.github.io/exist.github.io/",
+    "name":  "王明旭",
+    "role":  "数据工程 / 大模型开发方向求职者",
+    "headline":  "把项目做成案例，把学习过程沉淀成公开资产。",
+    "title":  "王明旭 | 学习笔记与项目作品",
+    "description":  "一个适合放在简历中的个人站，集中展示学习笔记、项目作品、技术方向和长期成长记录。",
+    "intro":  "我把学习过程写成笔记，把项目实践整理成作品档案。这里既是博客，也是一个能让面试官快速理解我能力结构的个人工作台。",
+    "email":  "1939123241@qq.com",
+    "github":  "https://github.com/EXIST-D",
+    "resumeUrl":  "",
+    "location":  "北京 / 远程",
+    "availability":  "可实习 / 校招 / 社招岗位",
+    "focusAreas":  [
+                       "React / TypeScript 组件化开发",
+                       "Node.js 服务与接口设计",
+                       "前端性能、可维护性与工程化"
+                   ],
+    "skillGroups":  [
+                        {
+                            "title":  "前端",
+                            "items":  [
+                                          "HTML",
+                                          "CSS",
+                                          "JavaScript",
+                                          "TypeScript",
+                                          "React",
+                                          "Astro"
+                                      ]
+                        },
+                        {
+                            "title":  "工程化",
+                            "items":  [
+                                          "Git",
+                                          "Vite",
+                                          "ESLint",
+                                          "Prettier",
+                                          "自动化部署"
+                                      ]
+                        },
+                        {
+                            "title":  "后端与数据",
+                            "items":  [
+                                          "Node.js",
+                                          "REST API",
+                                          "MySQL",
+                                          "Supabase"
+                                      ]
+                        }
+                    ],
+    "principles":  [
+                       "学习内容不只记录结论，也记录踩坑和取舍。",
+                       "项目展示优先解释目标、难点、技术方案和实际结果。",
+                       "页面设计追求克制和可读性，让信息本身成为主角。"
+                   ],
+    "timeline":  [
+                     {
+                         "period":  "现在",
+                         "title":  "持续维护个人站与项目案例",
+                         "description":  "把零散的学习材料整理成长期可访问、可更新、可在简历中引用的公开内容。"
+                     },
+                     {
+                         "period":  "最近一年",
+                         "title":  "围绕前端与全栈项目打磨交付能力",
+                         "description":  "重点提升组件设计、接口协作、性能优化和真实项目表达能力。"
+                     },
+                     {
+                         "period":  "下一步",
+                         "title":  "补充真实项目、上线独立域名、持续写作",
+                         "description":  "把这个站点从模板升级为你的长期职业主页。"
+                     }
+                 ],
+    "contactLinks":  [
+                         {
+                             "label":  "代码仓库",
+                             "href":  "https://github.com/EXIST-D"
+                         },
+                         {
+                             "label":  "邮箱",
+                             "href":  "mailto:1939123241@qq.com"
+                         },
+                         {
+                             "label":  "订阅",
+                             "href":  "/rss.xml"
+                         }
+                     ]
 }
+
