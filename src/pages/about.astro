@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { contactLinks, siteConfig, skillGroups, timeline } from '../site.config';
+---
+
+<BaseLayout title={`关于 | ${siteConfig.name}`} description="关于这个个人站以及它适合在简历中承担的作用。">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">关于</p>
+      <h1>把“我会什么”变成更容易被理解的公开表达。</h1>
+      <p>
+        如果简历是摘要，这个站点就是长文版说明书。它适合把项目细节、学习轨迹、技术兴趣和联系方式串起来，
+        帮你建立更完整的职业形象。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <SectionHeading
+            eyebrow="个人简介"
+            title={siteConfig.name}
+            body={`${siteConfig.role}，${siteConfig.location}。这里可以换成你的真实简介、教育背景和求职方向。`}
+          />
+
+          <p>
+            推荐在这里补充你为什么做技术、最关心哪些方向、做项目时最注重什么。相比只写“热爱编程”，
+            更具体的表达会更有记忆点。
+          </p>
+
+          <div class="about-columns">
+            {skillGroups.map((group) => (
+              <div class="page-panel">
+                <p class="panel-label">{group.title}</p>
+                <div class="skill-cloud">
+                  {group.items.map((item) => (
+                    <span class="tag">{item}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="timeline-list">
+            {timeline.map((item) => (
+              <article class="timeline-item">
+                <p class="panel-label">{item.period}</p>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div class="project-intro">
+          <p class="panel-label">联系方式</p>
+          <h3>建议至少保留一个代码平台链接和一个稳定联系方式。</h3>
+          <ul class="contact-list">
+            {contactLinks.map((item) => (
+              <li><a href={item.href}>{item.label}</a></li>
+            ))}
+          </ul>
+          <p>
+            如果你后面补了独立域名，可以把它直接放进简历头部。相比临时发一个仓库地址，会显得更完整也更专业。
+          </p>
+          {siteConfig.resumeUrl && <a class="text-link" href={siteConfig.resumeUrl}>打开在线简历</a>}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,68 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Tag from '../../components/Tag.astro';
+import { siteConfig } from '../../site.config';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+
+  return projects.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const title = `${entry.data.title} | ${siteConfig.name}`;
+const url = new URL(`/projects/${entry.slug}`, Astro.site ?? siteConfig.site).toString();
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: entry.data.title,
+  description: entry.data.description,
+  author: {
+    '@type': 'Person',
+    name: siteConfig.name,
+  },
+  url,
+  keywords: entry.data.stack.join(', '),
+};
+---
+
+<BaseLayout title={title} description={entry.data.description} structuredData={structuredData}>
+  <section class="page-hero">
+    <div class="container detail-shell">
+      <article>
+        <header class="post-header">
+          <p class="eyebrow">项目案例</p>
+          <h1>{entry.data.title}</h1>
+          <p>{entry.data.description}</p>
+          <div class="project-meta">
+            <span>{entry.data.period}</span>
+            <span>{entry.data.role}</span>
+            <span>{entry.data.outcome}</span>
+          </div>
+          <div class="project-stack">
+            {entry.data.stack.map((item) => (
+              <Tag label={item} />
+            ))}
+          </div>
+          <div class="link-row">
+            {entry.data.demo && <a class="text-link" href={entry.data.demo}>在线预览</a>}
+            {entry.data.repo && <a class="text-link" href={entry.data.repo}>源码仓库</a>}
+          </div>
+        </header>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

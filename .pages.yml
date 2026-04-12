@@ -1,0 +1,69 @@
+media:
+  input: public/uploads
+  output: /uploads
+
+content:
+  - name: notes
+    label: 学习笔记
+    type: collection
+    path: src/content/notes
+    filename: "{primary}.md"
+    view:
+      fields: [title, publishedAt, draft]
+    fields:
+      - { name: title, label: 标题, type: string, required: true }
+      - { name: description, label: 摘要, type: string, required: true }
+      - { name: publishedAt, label: 发布时间, type: date, required: true }
+      - { name: updatedAt, label: 更新时间, type: date }
+      - { name: tags, label: 标签, type: string, list: true }
+      - { name: featured, label: 首页精选, type: boolean }
+      - { name: minutes, label: 阅读分钟数, type: number }
+      - { name: draft, label: 草稿, type: boolean }
+      - { name: body, label: 正文, type: rich-text }
+
+  - name: projects
+    label: 项目作品
+    type: collection
+    path: src/content/projects
+    filename: "{primary}.md"
+    view:
+      fields: [title, period, featured]
+    fields:
+      - { name: title, label: 项目名, type: string, required: true }
+      - { name: description, label: 简介, type: string, required: true }
+      - { name: period, label: 时间范围, type: string, required: true }
+      - { name: stack, label: 技术栈, type: string, list: true }
+      - { name: featured, label: 首页精选, type: boolean }
+      - { name: order, label: 排序, type: number }
+      - { name: role, label: 角色, type: string, required: true }
+      - { name: outcome, label: 结果, type: string, required: true }
+      - { name: demo, label: 演示地址, type: string }
+      - { name: repo, label: 仓库地址, type: string }
+      - { name: body, label: 正文, type: rich-text }
+
+  - name: siteSettings
+    label: 站点基础信息
+    type: file
+    path: src/content/site/settings.json
+    fields:
+      - { name: site, label: 站点地址, type: string }
+      - { name: name, label: 名字, type: string }
+      - { name: role, label: 角色, type: string }
+      - { name: headline, label: 主页副标题, type: string }
+      - { name: title, label: SEO 标题, type: string }
+      - { name: description, label: SEO 描述, type: string }
+      - { name: intro, label: 页脚介绍, type: string }
+      - { name: email, label: 邮箱, type: string }
+      - { name: github, label: GitHub 链接, type: string }
+      - { name: resumeUrl, label: 简历链接, type: string }
+      - { name: location, label: 地点, type: string }
+      - { name: availability, label: 求职状态, type: string }
+
+  - name: homeCopy
+    label: 首页文案
+    type: file
+    path: src/content/site/home.json
+    fields:
+      - { name: heroEyebrow, label: 顶部短句, type: string }
+      - { name: heroLead, label: 顶部说明, type: string }
+      - { name: focusHint, label: 重点说明, type: string }

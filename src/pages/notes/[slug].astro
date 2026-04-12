@@ -1,0 +1,110 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Tag from '../../components/Tag.astro';
+import { siteConfig } from '../../site.config';
+import { getRelatedNotes, slugifyTag } from '../../utils/content';
+import { formatDate } from '../../utils/format';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes', ({ data }) => !data.draft);
+
+  return notes.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'notes'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const title = `${entry.data.title} | ${siteConfig.name}`;
+const allNotes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+const relatedNotes = getRelatedNotes(allNotes, entry);
+const url = new URL(`/notes/${entry.slug}`, Astro.site ?? siteConfig.site).toString();
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: entry.data.publishedAt.toISOString(),
+  dateModified: (entry.data.updatedAt ?? entry.data.publishedAt).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: siteConfig.name,
+  },
+  mainEntityOfPage: url,
+  keywords: entry.data.tags.join(', '),
+};
+---
+
+<BaseLayout title={title} description={entry.data.description} structuredData={structuredData}>
+  <section class="page-hero">
+    <div class="container article-shell">
+      <article class="detail-shell">
+        <header class="post-header">
+          <p class="eyebrow">学习笔记</p>
+          <h1>{entry.data.title}</h1>
+          <p>{entry.data.description}</p>
+          <div class="meta-inline">
+            <span class="entry-date">{formatDate(entry.data.publishedAt)}</span>
+            <span class="entry-date">{entry.data.minutes} 分钟阅读</span>
+            {entry.data.updatedAt && <span class="entry-date">更新于 {formatDate(entry.data.updatedAt)}</span>}
+          </div>
+          <div class="entry-tags">
+            {entry.data.tags.map((tag) => (
+              <a href={`/topics/${slugifyTag(tag)}`}>
+                <Tag label={tag} />
+              </a>
+            ))}
+          </div>
+        </header>
+
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+
+      <aside class="detail-sidebar">
+        <div class="page-panel">
+          <p class="panel-label">阅读信息</p>
+          <ul class="clean-list">
+            <li>发布时间：{formatDate(entry.data.publishedAt)}</li>
+            <li>阅读时长：{entry.data.minutes} 分钟</li>
+            <li>专题数量：{entry.data.tags.length}</li>
+          </ul>
+        </div>
+
+        <div class="page-panel">
+          <p class="panel-label">相关专题</p>
+          <div class="topic-cloud">
+            {entry.data.tags.map((tag) => (
+              <a class="topic-link" href={`/topics/${slugifyTag(tag)}`}>
+                <span>{tag}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {relatedNotes.length > 0 && (
+          <div class="page-panel">
+            <p class="panel-label">相关文章</p>
+            <div class="related-list">
+              {relatedNotes.map((note) => (
+                <a class="related-item" href={`/notes/${note.slug}`}>
+                  <strong>{note.data.title}</strong>
+                  <span>{formatDate(note.data.publishedAt)}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

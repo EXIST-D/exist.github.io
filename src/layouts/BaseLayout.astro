@@ -1,0 +1,103 @@
+---
+import StructuredData from '../components/StructuredData.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { siteConfig } from '../site.config';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+}
+
+const {
+  title = siteConfig.title,
+  description = siteConfig.description,
+  structuredData,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.site).toString();
+const socialImage = new URL('/social-card.svg', Astro.site ?? siteConfig.site).toString();
+const defaultStructuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.site,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: siteConfig.name,
+    url: siteConfig.site,
+    jobTitle: siteConfig.role,
+    email: siteConfig.email,
+    sameAs: [siteConfig.github],
+  },
+];
+
+const allStructuredData = defaultStructuredData.concat(
+  structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : [],
+);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0a111b" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    {allStructuredData.map((item) => <StructuredData data={item} />)}
+  </head>
+
+  <body>
+    <div class="page-bg" aria-hidden="true">
+      <div class="page-orb orb-one"></div>
+      <div class="page-orb orb-two"></div>
+      <div class="page-grid"></div>
+    </div>
+
+    <SiteHeader />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter />
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        const hasIdentityToken = /invite_token|confirmation_token|recovery_token|email_change_token/.test(
+          `${window.location.hash}${window.location.search}`,
+        );
+
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user && hasIdentityToken) {
+            window.netlifyIdentity.open();
+          }
+        });
+
+        window.netlifyIdentity.on('login', () => {
+          if (hasIdentityToken || window.location.pathname === '/') {
+            window.location.href = '/admin/';
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,140 @@
+# 推送到 GitHub 之后，把下面的 repo 改成你的真实仓库名。
+# 如果你部署在 Netlify 上，推荐配合 Identity + Git Gateway 使用。
+backend:
+  name: git-gateway
+  branch: main
+
+site_url: https://69d93d2f17e0c6245d2a11c8--tiny-dango-5a7dfa.netlify.app
+display_url: https://69d93d2f17e0c6245d2a11c8--tiny-dango-5a7dfa.netlify.app
+logo_url: /favicon.svg
+
+media_folder: public/uploads
+public_folder: /uploads
+local_backend: true
+
+publish_mode: editorial_workflow
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: site
+    label: 站点设置
+    files:
+      - name: settings
+        label: 基础信息
+        file: src/content/site/settings.json
+        format: json
+        fields:
+          - { name: site, label: 站点地址, widget: string }
+          - { name: name, label: 名字, widget: string }
+          - { name: role, label: 角色, widget: string }
+          - { name: headline, label: 主页副标题, widget: string }
+          - { name: title, label: SEO 标题, widget: string }
+          - { name: description, label: SEO 描述, widget: text }
+          - { name: intro, label: 页脚介绍, widget: text }
+          - { name: email, label: 邮箱, widget: string }
+          - { name: github, label: GitHub 链接, widget: string }
+          - { name: resumeUrl, label: 简历链接, widget: string, required: false }
+          - { name: location, label: 地点, widget: string }
+          - { name: availability, label: 求职状态, widget: string }
+          - { name: focusAreas, label: 当前重点, widget: list, field: { name: item, label: 条目, widget: string } }
+          - name: skillGroups
+            label: 技能分组
+            widget: list
+            fields:
+              - { name: title, label: 分组标题, widget: string }
+              - { name: items, label: 技能项, widget: list, field: { name: item, label: 技能, widget: string } }
+          - { name: principles, label: 版本强调, widget: list, field: { name: item, label: 条目, widget: string } }
+          - name: timeline
+            label: 时间线
+            widget: list
+            fields:
+              - { name: period, label: 时间段, widget: string }
+              - { name: title, label: 标题, widget: string }
+              - { name: description, label: 描述, widget: text }
+          - name: contactLinks
+            label: 联系方式
+            widget: list
+            fields:
+              - { name: label, label: 显示文字, widget: string }
+              - { name: href, label: 链接, widget: string }
+
+      - name: home
+        label: 首页文案
+        file: src/content/site/home.json
+        format: json
+        fields:
+          - { name: heroEyebrow, label: 顶部短句, widget: string }
+          - { name: heroLead, label: 主页引导语, widget: text }
+          - { name: focusHint, label: 重点说明, widget: string }
+          - name: projectSection
+            label: 项目区块
+            widget: object
+            fields:
+              - { name: eyebrow, label: 眉标题, widget: string }
+              - { name: title, label: 标题, widget: string }
+              - { name: body, label: 描述, widget: text }
+          - name: notesSection
+            label: 笔记区块
+            widget: object
+            fields:
+              - { name: eyebrow, label: 眉标题, widget: string }
+              - { name: title, label: 标题, widget: string }
+              - { name: body, label: 描述, widget: text }
+          - name: aboutSection
+            label: 站点说明区块
+            widget: object
+            fields:
+              - { name: eyebrow, label: 眉标题, widget: string }
+              - { name: title, label: 标题, widget: string }
+              - { name: body, label: 描述, widget: text }
+              - { name: summary, label: 概述, widget: text }
+              - { name: suitableList, label: 适合放什么, widget: list, field: { name: item, label: 条目, widget: string } }
+          - name: replacePanel
+            label: 替换提示卡片
+            widget: object
+            fields:
+              - { name: label, label: 标签, widget: string }
+              - { name: title, label: 标题, widget: string }
+              - { name: body, label: 描述, widget: text }
+              - { name: linkText, label: 按钮文字, widget: string }
+
+  - name: notes
+    label: 学习笔记
+    label_singular: 笔记
+    folder: src/content/notes
+    create: true
+    preview_path: notes/{{slug}}
+    slug: "{{slug}}"
+    fields:
+      - { name: title, label: 标题, widget: string }
+      - { name: description, label: 摘要, widget: text }
+      - { name: publishedAt, label: 发布时间, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
+      - { name: updatedAt, label: 更新时间, widget: datetime, required: false, date_format: "YYYY-MM-DD", time_format: false }
+      - { name: tags, label: 标签, widget: list, summary: "{{fields.tag}}", field: { name: tag, label: 标签, widget: string } }
+      - { name: featured, label: 首页精选, widget: boolean, default: false, required: false }
+      - { name: minutes, label: 阅读分钟数, widget: number, value_type: int, min: 1, default: 5 }
+      - { name: draft, label: 草稿, widget: boolean, default: false, required: false }
+      - { name: body, label: 正文, widget: markdown }
+
+  - name: projects
+    label: 项目作品
+    label_singular: 项目
+    folder: src/content/projects
+    create: true
+    preview_path: projects/{{slug}}
+    slug: "{{slug}}"
+    fields:
+      - { name: title, label: 项目名, widget: string }
+      - { name: description, label: 简介, widget: text }
+      - { name: period, label: 时间范围, widget: string }
+      - { name: stack, label: 技术栈, widget: list, summary: "{{fields.item}}", field: { name: item, label: 技术项, widget: string } }
+      - { name: featured, label: 首页精选, widget: boolean, default: false, required: false }
+      - { name: order, label: 排序, widget: number, value_type: int, min: 1, default: 99 }
+      - { name: role, label: 角色, widget: string }
+      - { name: outcome, label: 结果, widget: string }
+      - { name: demo, label: 演示地址, widget: string, required: false }
+      - { name: repo, label: 仓库地址, widget: string, required: false }
+      - { name: body, label: 正文, widget: markdown }

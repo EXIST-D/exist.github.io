@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Tag from '../../components/Tag.astro';
+import { siteConfig } from '../../site.config';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title={`项目作品 | ${siteConfig.name}`} description="项目作品、技术选型和结果说明。">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">项目</p>
+      <h1>项目作品</h1>
+      <p>把作品做成可阅读的案例，会比只放一行项目名和技术栈更有说服力。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container project-grid">
+      {projects.length ? (
+        projects.map((project, index) => (
+          <article class="project-strip">
+            <div class="project-index">0{index + 1}</div>
+            <div class="project-copy">
+              <h3><a href={`/projects/${project.slug}`}>{project.data.title}</a></h3>
+              <p class="project-summary">{project.data.description}</p>
+              <div class="project-meta">
+                <span>{project.data.period}</span>
+                <span>{project.data.role}</span>
+                <span>{project.data.outcome}</span>
+              </div>
+              <div class="project-stack">
+                {project.data.stack.map((item) => (
+                  <Tag label={item} />
+                ))}
+              </div>
+              <div class="link-row">
+                <a class="text-link" href={`/projects/${project.slug}`}>查看完整案例</a>
+                {project.data.demo && <a class="text-link" href={project.data.demo}>在线预览</a>}
+                {project.data.repo && <a class="text-link" href={project.data.repo}>源码仓库</a>}
+              </div>
+            </div>
+          </article>
+        ))
+      ) : (
+        <div class="empty-state">这里还没有项目案例，可以先补一个你最想在面试中讲解的项目。</div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+import { contactLinks, siteConfig } from '../site.config';
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="footer-label">个人工作台</p>
+      <h2>{siteConfig.name}</h2>
+      <p>{siteConfig.intro}</p>
+    </div>
+
+    <div>
+      <p class="footer-label">联系方式</p>
+      <ul class="footer-links">
+        {contactLinks.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>

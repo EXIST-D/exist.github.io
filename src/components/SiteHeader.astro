@@ -1,0 +1,25 @@
+---
+import { navLinks, siteConfig } from '../site.config';
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark">01</span>
+      <span class="brand-copy">
+        <strong>{siteConfig.name}</strong>
+        <small>{siteConfig.role}</small>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="主导航">
+      {navLinks.map((item) => (
+        <a class:list={['nav-link', pathname === item.href && 'is-active']} href={item.href}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,42 @@
+---
+const configUrl = '/admin/config.yml';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>内容管理后台</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href={configUrl} type="text/yaml" rel="cms-config-url" />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      body {
+        margin: 0;
+        background: #0a111b;
+        color: #f4efe7;
+        font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => {
+              window.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    </script>
+    <script src="https://unpkg.com/decap-cms@^3.10.1/dist/decap-cms.js"></script>
+  </body>
+</html>
