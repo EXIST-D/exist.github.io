@@ -1,12 +1,13 @@
 ---
 import { navLinks, siteConfig } from '../site.config';
+import { withBase, withoutBase } from '../utils/url';
 
-const pathname = Astro.url.pathname;
+const pathname = withoutBase(Astro.url.pathname);
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/">
+    <a class="brand" href={withBase('/')}>
       <span class="brand-mark">01</span>
       <span class="brand-copy">
         <strong>{siteConfig.name}</strong>
@@ -16,7 +17,7 @@ const pathname = Astro.url.pathname;
 
     <nav class="site-nav" aria-label="主导航">
       {navLinks.map((item) => (
-        <a class:list={['nav-link', pathname === item.href && 'is-active']} href={item.href}>
+        <a class:list={['nav-link', pathname === item.href && 'is-active']} href={withBase(item.href)}>
           {item.label}
         </a>
       ))}

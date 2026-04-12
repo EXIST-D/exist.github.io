@@ -1,5 +1,6 @@
 ---
 import { contactLinks, siteConfig } from '../site.config';
+import { resolveInternalHref } from '../utils/url';
 ---
 
 <footer class="site-footer">
@@ -14,7 +15,7 @@ import { contactLinks, siteConfig } from '../site.config';
       <p class="footer-label">联系方式</p>
       <ul class="footer-links">
         {contactLinks.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
+          <li><a href={resolveInternalHref(item.href)}>{item.label}</a></li>
         ))}
       </ul>
     </div>

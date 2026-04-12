@@ -1,5 +1,9 @@
 ---
-const configUrl = '/admin/config.yml';
+import { withBase } from '../../utils/url';
+
+const configUrl = withBase('/admin/config.yml');
+const faviconPath = withBase('/favicon.svg');
+const adminPath = withBase('/admin/');
 ---
 
 <!doctype html>
@@ -9,7 +13,7 @@ const configUrl = '/admin/config.yml';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <title>内容管理后台</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={faviconPath} />
     <link href={configUrl} type="text/yaml" rel="cms-config-url" />
     <style>
       :root {
@@ -26,12 +30,12 @@ const configUrl = '/admin/config.yml';
   </head>
   <body>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
+    <script define:vars={{ adminPath }}>
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', (user) => {
           if (!user) {
             window.netlifyIdentity.on('login', () => {
-              window.location.href = '/admin/';
+              window.location.href = adminPath;
             });
           }
         });

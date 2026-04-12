@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../utils/url';
 ---
 
 <BaseLayout title="页面未找到">
@@ -9,7 +10,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h1>这个页面暂时不存在。</h1>
       <p>可以回到首页继续查看项目作品和学习笔记。</p>
       <div class="button-row">
-        <a class="button primary" href="/">返回首页</a>
+        <a class="button primary" href={withBase('/')}>返回首页</a>
       </div>
     </div>
   </section>

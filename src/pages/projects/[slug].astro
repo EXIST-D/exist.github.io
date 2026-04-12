@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Tag from '../../components/Tag.astro';
 import { siteConfig } from '../../site.config';
+import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -20,7 +21,7 @@ interface Props {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 const title = `${entry.data.title} | ${siteConfig.name}`;
-const url = new URL(`/projects/${entry.slug}`, Astro.site ?? siteConfig.site).toString();
+const url = new URL(withBase(`/projects/${entry.slug}`), Astro.site ?? siteConfig.site).toString();
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'CreativeWork',

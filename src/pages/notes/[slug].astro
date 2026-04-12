@@ -5,6 +5,7 @@ import Tag from '../../components/Tag.astro';
 import { siteConfig } from '../../site.config';
 import { getRelatedNotes, slugifyTag } from '../../utils/content';
 import { formatDate } from '../../utils/format';
+import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes', ({ data }) => !data.draft);
@@ -26,7 +27,7 @@ const allNotes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
 const relatedNotes = getRelatedNotes(allNotes, entry);
-const url = new URL(`/notes/${entry.slug}`, Astro.site ?? siteConfig.site).toString();
+const url = new URL(withBase(`/notes/${entry.slug}`), Astro.site ?? siteConfig.site).toString();
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -58,7 +59,7 @@ const structuredData = {
           </div>
           <div class="entry-tags">
             {entry.data.tags.map((tag) => (
-              <a href={`/topics/${slugifyTag(tag)}`}>
+              <a href={withBase(`/topics/${slugifyTag(tag)}`)}>
                 <Tag label={tag} />
               </a>
             ))}
@@ -84,7 +85,7 @@ const structuredData = {
           <p class="panel-label">相关专题</p>
           <div class="topic-cloud">
             {entry.data.tags.map((tag) => (
-              <a class="topic-link" href={`/topics/${slugifyTag(tag)}`}>
+              <a class="topic-link" href={withBase(`/topics/${slugifyTag(tag)}`)}>
                 <span>{tag}</span>
               </a>
             ))}
@@ -96,7 +97,7 @@ const structuredData = {
             <p class="panel-label">相关文章</p>
             <div class="related-list">
               {relatedNotes.map((note) => (
-                <a class="related-item" href={`/notes/${note.slug}`}>
+                <a class="related-item" href={withBase(`/notes/${note.slug}`)}>
                   <strong>{note.data.title}</strong>
                   <span>{formatDate(note.data.publishedAt)}</span>
                 </a>

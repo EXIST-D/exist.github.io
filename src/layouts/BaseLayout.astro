@@ -3,6 +3,7 @@ import StructuredData from '../components/StructuredData.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import { siteConfig } from '../site.config';
+import { withBase } from '../utils/url';
 import '../styles/global.css';
 
 interface Props {
@@ -18,7 +19,11 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.site).toString();
-const socialImage = new URL('/social-card.svg', Astro.site ?? siteConfig.site).toString();
+const socialImage = new URL(withBase('/social-card.svg'), Astro.site ?? siteConfig.site).toString();
+const faviconPath = withBase('/favicon.svg');
+const manifestPath = withBase('/manifest.webmanifest');
+const homePath = withBase('/');
+const adminPath = withBase('/admin/');
 const defaultStructuredData = [
   {
     '@context': 'https://schema.org',
@@ -51,7 +56,7 @@ const allStructuredData = defaultStructuredData.concat(
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={faviconPath} />
     <meta name="theme-color" content="#0a111b" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -63,7 +68,7 @@ const allStructuredData = defaultStructuredData.concat(
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="manifest" href={manifestPath} />
     {allStructuredData.map((item) => <StructuredData data={item} />)}
   </head>
 
@@ -80,7 +85,7 @@ const allStructuredData = defaultStructuredData.concat(
     </main>
     <SiteFooter />
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
+    <script define:vars={{ homePath, adminPath }}>
       if (window.netlifyIdentity) {
         const hasIdentityToken = /invite_token|confirmation_token|recovery_token|email_change_token/.test(
           `${window.location.hash}${window.location.search}`,
@@ -93,8 +98,11 @@ const allStructuredData = defaultStructuredData.concat(
         });
 
         window.netlifyIdentity.on('login', () => {
-          if (hasIdentityToken || window.location.pathname === '/') {
-            window.location.href = '/admin/';
+          const isHomePath =
+            window.location.pathname === homePath ||
+            window.location.pathname === homePath.replace(/\/$/, '');
+          if (hasIdentityToken || isHomePath) {
+            window.location.href = adminPath;
           }
         });
       }

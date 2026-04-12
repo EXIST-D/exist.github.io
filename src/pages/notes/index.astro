@@ -5,6 +5,7 @@ import Tag from '../../components/Tag.astro';
 import { siteConfig } from '../../site.config';
 import { getAllTopics } from '../../utils/content';
 import { formatDate } from '../../utils/format';
+import { withBase } from '../../utils/url';
 
 const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
@@ -27,7 +28,7 @@ const topics = getAllTopics(notes);
         <p class="panel-label">按专题浏览</p>
         <div class="topic-cloud">
           {topics.map((topic) => (
-            <a class="topic-link" href={`/topics/${topic.slug}`}>
+            <a class="topic-link" href={withBase(`/topics/${topic.slug}`)}>
               <span>{topic.name}</span>
               <small>{topic.count}</small>
             </a>
@@ -41,7 +42,7 @@ const topics = getAllTopics(notes);
             <div class="entry-head">
               <div>
                 <p class="list-kicker">文章</p>
-                <h3><a href={`/notes/${note.slug}`}>{note.data.title}</a></h3>
+                <h3><a href={withBase(`/notes/${note.slug}`)}>{note.data.title}</a></h3>
               </div>
               <div class="entry-date">
                 <span>{formatDate(note.data.publishedAt)}</span>

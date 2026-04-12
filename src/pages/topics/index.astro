@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { siteConfig } from '../../site.config';
 import { getAllTopics } from '../../utils/content';
+import { withBase } from '../../utils/url';
 
 const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
@@ -23,7 +24,7 @@ const topics = getAllTopics(notes);
     <div class="container">
       <div class="topic-grid">
         {topics.map((topic) => (
-          <a class="topic-card" href={`/topics/${topic.slug}`}>
+          <a class="topic-card" href={withBase(`/topics/${topic.slug}`)}>
             <p class="panel-label">专题</p>
             <h2>{topic.name}</h2>
             <p>{topic.count} 篇内容</p>

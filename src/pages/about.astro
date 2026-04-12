@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import { contactLinks, siteConfig, skillGroups, timeline } from '../site.config';
+import { resolveInternalHref } from '../utils/url';
 ---
 
 <BaseLayout title={`关于 | ${siteConfig.name}`} description="关于这个个人站以及它适合在简历中承担的作用。">
@@ -60,7 +61,7 @@ import { contactLinks, siteConfig, skillGroups, timeline } from '../site.config'
           <h3>建议至少保留一个代码平台链接和一个稳定联系方式。</h3>
           <ul class="contact-list">
             {contactLinks.map((item) => (
-              <li><a href={item.href}>{item.label}</a></li>
+              <li><a href={resolveInternalHref(item.href)}>{item.label}</a></li>
             ))}
           </ul>
           <p>

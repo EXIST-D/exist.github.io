@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Tag from '../../components/Tag.astro';
 import { siteConfig } from '../../site.config';
+import { withBase } from '../../utils/url';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -23,7 +24,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
           <article class="project-strip">
             <div class="project-index">0{index + 1}</div>
             <div class="project-copy">
-              <h3><a href={`/projects/${project.slug}`}>{project.data.title}</a></h3>
+              <h3><a href={withBase(`/projects/${project.slug}`)}>{project.data.title}</a></h3>
               <p class="project-summary">{project.data.description}</p>
               <div class="project-meta">
                 <span>{project.data.period}</span>
@@ -36,7 +37,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
                 ))}
               </div>
               <div class="link-row">
-                <a class="text-link" href={`/projects/${project.slug}`}>查看完整案例</a>
+                <a class="text-link" href={withBase(`/projects/${project.slug}`)}>查看完整案例</a>
                 {project.data.demo && <a class="text-link" href={project.data.demo}>在线预览</a>}
                 {project.data.repo && <a class="text-link" href={project.data.repo}>源码仓库</a>}
               </div>

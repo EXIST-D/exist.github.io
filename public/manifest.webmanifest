@@ -1,13 +1,13 @@
 {
   "name": "个人博客与项目作品集",
   "short_name": "个人站",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#0a111b",
   "theme_color": "#0a111b",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     }
