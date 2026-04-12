@@ -1,46 +1,49 @@
 ---
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { withBase } from '../../utils/url';
 
-const configUrl = withBase('/admin/config.yml');
-const faviconPath = withBase('/favicon.svg');
-const adminPath = withBase('/admin/');
+const cmsUrl = 'https://app.pagescms.org';
+const repoUrl = 'https://github.com/EXIST-D/exist.github.io';
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex,nofollow" />
-    <title>内容管理后台</title>
-    <link rel="icon" type="image/svg+xml" href={faviconPath} />
-    <link href={configUrl} type="text/yaml" rel="cms-config-url" />
-    <style>
-      :root {
-        color-scheme: dark;
-      }
+<BaseLayout title="在线编辑 | 王明旭" description="通过 Pages CMS 在线维护笔记、项目与站点内容。">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">内容管理</p>
+      <h1>在线编辑中心</h1>
+      <p>
+        这个站点使用 Pages CMS 在线编辑。正文采用 Markdown 原文保存，同时可直接输入 LaTeX 公式，例如
+        <code>$E=mc^2$</code> 或 <code>$$\\int_0^1 x^2 dx$$</code>。
+      </p>
 
-      body {
-        margin: 0;
-        background: #0a111b;
-        color: #f4efe7;
-        font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script define:vars={{ adminPath }}>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on('init', (user) => {
-          if (!user) {
-            window.netlifyIdentity.on('login', () => {
-              window.location.href = adminPath;
-            });
-          }
-        });
-      }
-    </script>
-    <script src="https://unpkg.com/decap-cms@^3.10.1/dist/decap-cms.js"></script>
-  </body>
-</html>
+      <div class="button-row">
+        <a class="button primary" href={cmsUrl} target="_blank" rel="noreferrer">打开 Pages CMS</a>
+        <a class="button ghost" href={repoUrl} target="_blank" rel="noreferrer">查看 GitHub 仓库</a>
+        <a class="button ghost" href={withBase('/')}>返回首页</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-grid">
+      <div>
+        <p class="panel-label">可编辑内容</p>
+        <ul class="clean-list">
+          <li>学习笔记：<code>src/content/notes</code></li>
+          <li>项目作品：<code>src/content/projects</code></li>
+          <li>站点设置：<code>src/content/site/settings.json</code></li>
+          <li>首页文案：<code>src/content/site/home.json</code></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="panel-label">权限说明</p>
+        <ul class="clean-list">
+          <li>只有 GitHub 仓库协作者可以保存修改。</li>
+          <li>如果要给别人写权限，需要你在 GitHub 仓库里单独授权。</li>
+          <li>建议同时保护 <code>main</code> 分支，避免未授权直写。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

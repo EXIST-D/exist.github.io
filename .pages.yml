@@ -19,7 +19,11 @@ content:
       - { name: featured, label: 首页精选, type: boolean }
       - { name: minutes, label: 阅读分钟数, type: number }
       - { name: draft, label: 草稿, type: boolean }
-      - { name: body, label: 正文, type: rich-text }
+      - name: body
+        label: 正文
+        type: code
+        options:
+          language: markdown
 
   - name: projects
     label: 项目作品
@@ -39,7 +43,11 @@ content:
       - { name: outcome, label: 结果, type: string, required: true }
       - { name: demo, label: 演示地址, type: string }
       - { name: repo, label: 仓库地址, type: string }
-      - { name: body, label: 正文, type: rich-text }
+      - name: body
+        label: 正文
+        type: code
+        options:
+          language: markdown
 
   - name: siteSettings
     label: 站点基础信息

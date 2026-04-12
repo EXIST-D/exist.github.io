@@ -1,6 +1,6 @@
-# 网页内编辑（推荐 Pages CMS）
+# 网页内编辑
 
-这个项目已经补充了 Pages CMS 配置。相比 Netlify Identity + Decap 的邀请制登录，Pages CMS 更适合直接使用 GitHub 账号在浏览器里编辑仓库内容。
+这个项目当前以 Pages CMS 作为在线编辑入口，正文采用 Markdown 原文保存，并支持直接书写 LaTeX 公式。
 
 ## 推荐使用方式
 
@@ -14,13 +14,21 @@
    - `站点基础信息`
    - `首页文案`
 
-## 文件位置
+## Markdown 和 LaTeX 写法
 
-- 笔记内容：`src/content/notes`
-- 项目内容：`src/content/projects`
-- 站点信息：`src/content/site`
+- 普通段落、标题、列表、链接都按 Markdown 写。
+- 行内公式写成 `$E=mc^2$`。
+- 块级公式写成：
 
-## 已保留的旧方案
+```md
+$$
+\int_0^1 x^2 dx
+$$
+```
 
-仓库中仍保留了 Decap CMS 相关文件，但当前更推荐直接使用 Pages CMS，不再依赖 `/admin` 登录链路。
+## 权限说明
+
+- 只有 GitHub 仓库协作者可以提交修改。
+- 如果你要给别人写权限，需要在 GitHub 仓库设置里单独授权。
+- 建议同时把 `main` 分支设为受保护分支，避免未授权直写。
 

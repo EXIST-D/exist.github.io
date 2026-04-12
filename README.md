@@ -5,6 +5,7 @@
 - 首页个人介绍与精选项目
 - 学习笔记列表与详情
 - 项目案例列表与详情
+- 在线编辑入口
 - RSS、sitemap、robots
 - 可继续扩展为作品集或技术博客
 
@@ -31,6 +32,8 @@ npm run build
    每个 Markdown 文件就是一篇学习笔记。
 4. 修改 `astro.config.mjs`
    把 `site` 改成你自己的正式域名。
+5. 如果要在线编辑，打开 `/admin/`
+   页面会引导你进入 Pages CMS；笔记和项目正文都支持 Markdown 与 LaTeX。
 
 ## 推荐上线方式
 

@@ -3,8 +3,9 @@ import StructuredData from '../components/StructuredData.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import { siteConfig } from '../site.config';
-import { withBase } from '../utils/url';
+import { withBase, withoutBase } from '../utils/url';
 import '../styles/global.css';
+import 'katex/dist/katex.min.css';
 
 interface Props {
   title?: string;
@@ -22,8 +23,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.site).toS
 const socialImage = new URL(withBase('/social-card.svg'), Astro.site ?? siteConfig.site).toString();
 const faviconPath = withBase('/favicon.svg');
 const manifestPath = withBase('/manifest.webmanifest');
-const homePath = withBase('/');
-const adminPath = withBase('/admin/');
+const isAdminPage = withoutBase(Astro.url.pathname).startsWith('/admin');
 const defaultStructuredData = [
   {
     '@context': 'https://schema.org',
@@ -55,6 +55,7 @@ const allStructuredData = defaultStructuredData.concat(
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={isAdminPage ? 'noindex,nofollow' : 'index,follow'} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={faviconPath} />
     <meta name="theme-color" content="#0a111b" />
@@ -84,28 +85,5 @@ const allStructuredData = defaultStructuredData.concat(
       <slot />
     </main>
     <SiteFooter />
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script define:vars={{ homePath, adminPath }}>
-      if (window.netlifyIdentity) {
-        const hasIdentityToken = /invite_token|confirmation_token|recovery_token|email_change_token/.test(
-          `${window.location.hash}${window.location.search}`,
-        );
-
-        window.netlifyIdentity.on('init', (user) => {
-          if (!user && hasIdentityToken) {
-            window.netlifyIdentity.open();
-          }
-        });
-
-        window.netlifyIdentity.on('login', () => {
-          const isHomePath =
-            window.location.pathname === homePath ||
-            window.location.pathname === homePath.replace(/\/$/, '');
-          if (hasIdentityToken || isHomePath) {
-            window.location.href = adminPath;
-          }
-        });
-      }
-    </script>
   </body>
 </html>

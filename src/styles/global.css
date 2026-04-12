@@ -579,6 +579,16 @@ main {
   border: 1px solid var(--line);
 }
 
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35rem 0;
+}
+
+.prose .katex {
+  font-size: 1em;
+}
+
 .about-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.85fr);

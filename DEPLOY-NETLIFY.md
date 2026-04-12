@@ -1,6 +1,12 @@
-# Netlify 部署指引
+# Netlify 部署指引（归档）
 
-这份流程适合希望使用 Netlify 托管站点并开启 CMS 在线编辑的情况。
+这份流程仅作为历史参考。当前仓库的正式方案是：
+
+- 站点托管：GitHub Pages
+- 在线编辑：Pages CMS
+- 内容格式：Markdown + LaTeX
+
+如果你准备继续用 Netlify，这份文档仍然可以作为参考。
 
 ## 1. 准备仓库
 
@@ -23,16 +29,12 @@
 
 ## 4. 修改 CMS 配置
 
-在 `public/admin/config.yml` 中，把 `repo` 改成你的仓库：
-
-```
-repo: your-github-name/your-repo-name
-```
+旧方案里需要改 `public/admin/config.yml`。当前仓库已经切换到 Pages CMS，所以这一步只保留作历史说明，不再需要手动修改这个文件。
 
 ## 5. 验证上线
 
 - 访问站点首页确认内容正常。
-- 访问 `https://你的域名/admin` 进行在线编辑。
+- 访问 `https://你的域名/admin` 时，当前仓库会引导你进入 Pages CMS。
 
 ## 常见检查项
 
