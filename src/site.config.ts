@@ -21,7 +21,6 @@ export const navLinks = [
   { href: '/notes', label: '笔记' },
   { href: '/topics', label: '专题' },
   { href: '/about', label: '关于' },
-  { href: '/admin/', label: '编辑' },
 ];
 
 export const focusAreas = siteData.focusAreas;

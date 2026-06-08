@@ -3,7 +3,7 @@ import StructuredData from '../components/StructuredData.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import { siteConfig } from '../site.config';
-import { withBase, withoutBase } from '../utils/url';
+import { withBase } from '../utils/url';
 import '../styles/global.css';
 import 'katex/dist/katex.min.css';
 
@@ -23,7 +23,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? siteConfig.site).toS
 const socialImage = new URL(withBase('/social-card.svg'), Astro.site ?? siteConfig.site).toString();
 const faviconPath = withBase('/favicon.svg');
 const manifestPath = withBase('/manifest.webmanifest');
-const isAdminPage = withoutBase(Astro.url.pathname).startsWith('/admin');
 const defaultStructuredData = [
   {
     '@context': 'https://schema.org',
@@ -55,7 +54,7 @@ const allStructuredData = defaultStructuredData.concat(
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content={isAdminPage ? 'noindex,nofollow' : 'index,follow'} />
+    <meta name="robots" content="index,follow" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={faviconPath} />
     <meta name="theme-color" content="#0a111b" />

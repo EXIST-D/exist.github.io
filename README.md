@@ -1,60 +1,63 @@
 # EXIST-D 个人博客与项目作品集
 
-这是一个基于 Astro 的静态个人站点，部署在 GitHub Pages 上。
+这是一个基于 Astro 的静态个人博客，用来展示学习笔记、项目作品和个人信息。
 
-## 站点功能
+线上地址：
 
-- 首页个人介绍
-- 学习笔记列表与详情页
-- 项目作品列表与详情页
-- 专题页
-- RSS / sitemap / robots
-- `/admin/` 在线编辑器
+- `https://exist-d.github.io/exist.github.io/`
 
-## 在线编辑
+## 当前维护方式
 
-当前网站内置了一个自研的在线编辑器：
+本项目不再提供站内在线编辑功能。
 
-- 支持 Markdown
-- 支持 LaTeX / KaTeX 公式
-- 支持左侧文件列表、中间编辑、右侧实时预览
-- 支持直接保存回 GitHub 仓库
+后续内容维护统一采用：
 
-### 权限规则
+1. 在本地修改 Markdown / JSON 文件
+2. 本地运行构建检查
+3. 通过 Git 提交并推送到 GitHub
+4. GitHub Actions 自动发布到 GitHub Pages
 
-- 只有 GitHub 登录用户 `EXIST-D` 可以保存
-- 其他人即使打开编辑器，也需要你授权后才能写入
-- Token 只保存在本地浏览器中，不会上传到站点
+## 项目结构
 
-### 打开方式
+- `src/content/notes/`：学习笔记 Markdown
+- `src/content/projects/`：项目作品 Markdown
+- `src/content/site/settings.json`：站点基础信息
+- `src/content/site/home.json`：首页文案
+- `src/pages/`：页面路由
+- `src/components/`：通用组件
+- `src/layouts/`：页面布局
+- `src/styles/`：全站样式
+- `public/uploads/`：图片和静态资源
+- `.github/workflows/deploy.yml`：GitHub Pages 自动发布流程
 
-访问：
-
-- `https://exist-d.github.io/exist.github.io/admin/`
-
-## 本地运行
+## 本地开发
 
 ```bash
 npm install
 npm run dev
 ```
 
-## 构建
+## 构建检查
 
 ```bash
 npm run build
 ```
 
-## 主要可编辑内容
+## 内容说明
 
-- `src/content/notes/`
-- `src/content/projects/`
-- `src/content/site/`
-- `src/pages/`
-- `src/components/`
-- `src/styles/`
+笔记和项目正文使用 Markdown，站点渲染时仍支持 LaTeX 公式：
 
-## 备注
+```md
+行内公式：$E=mc^2$
 
-- 这是一个项目页仓库，站点实际地址带有 `/exist.github.io/` 前缀。
-- 如果你以后迁移到自定义域名，需要同步修改 `astro.config.mjs` 和站内链接。
+块级公式：
+
+$$
+\int_0^1 x^2 \, dx
+$$
+```
+
+## 相关文档
+
+- `CONTENT-WORKFLOW.md`：如何新增或修改笔记、项目和页面内容
+- `DEPLOY-GITHUB-PAGES.md`：GitHub Pages 发布流程说明
