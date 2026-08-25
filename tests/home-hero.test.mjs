@@ -30,3 +30,12 @@ test('uses a single-column technical ledger and exposes the GitHub profile', () 
   assert.match(styles, /\.tech-stack-grid li\s*\{[\s\S]*?grid-template-columns:\s*7\.3rem minmax\(0, 1fr\);/);
   assert.match(styles, /\.hero-grid\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1\.25fr\) minmax\(0, 1\.15fr\);/);
 });
+
+test('uses concise project and personal-section copy', () => {
+  assert.match(settings, /"role":\s+"AI应用开发\/大模型开发\/数据工程方向求职者"/);
+  assert.match(homeData, /"title": "项目案例展示"/);
+  assert.match(homeData, /"eyebrow": "关于我"/);
+  assert.match(homeData, /"title": "关于我的更多信息"/);
+  assert.doesNotMatch(homeData, /每个项目页都强调目标、技术方案/);
+  assert.doesNotMatch(homeData, /你可以把简历里写不下的内容展开在这里/);
+});
