@@ -22,3 +22,11 @@ test('presents the supplied technical stack and compact project statistics', () 
   assert.match(homePage, /stat-grid-compact/);
   assert.match(styles, /\.stat-grid-compact/);
 });
+
+test('uses a single-column technical ledger and exposes the GitHub profile', () => {
+  assert.match(homePage, /class="hero-github"/);
+  assert.match(homePage, /href=\{siteConfig\.github\}/);
+  assert.match(styles, /\.tech-stack-grid\s*\{[\s\S]*?grid-template-columns:\s*1fr;/);
+  assert.match(styles, /\.tech-stack-grid li\s*\{[\s\S]*?grid-template-columns:\s*7\.3rem minmax\(0, 1fr\);/);
+  assert.match(styles, /\.hero-grid\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1\.25fr\) minmax\(0, 1\.15fr\);/);
+});
