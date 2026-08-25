@@ -8,7 +8,7 @@ stack:
   - Markdown
   - CSS
 featured: true
-order: 1
+order: 5
 role: 独立设计与开发
 outcome: 形成持续写作和公开表达的基础站点
 demo: https://example.com

@@ -10,7 +10,7 @@ stack:
   - Vite
   - SQLite
 featured: true
-order: 1
+order: 3
 role: 独立设计与开发
 outcome: 发布可安装的 Windows 桌面应用，并持续迭代浮窗、工作台、Markdown 预览和本地数据能力。
 repo: https://github.com/EXIST-D/FloatNote

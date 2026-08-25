@@ -9,7 +9,7 @@ stack:
   - Python
   - Reproducible Research
 featured: true
-order: 0
+order: 1
 role: 独立设计与维护
 outcome: 将医学数据分析组织为可检查、可确认、可复现、可审计的流程，并输出可直接用于研究交付的统计表、图形和报告。
 repo: https://github.com/EXIST-D/medical-analysis-orchestrator
