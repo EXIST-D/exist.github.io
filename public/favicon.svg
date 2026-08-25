@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Site mark">
-  <rect width="64" height="64" rx="16" fill="#0a111b" />
-  <path d="M17 46V18h6.5v22.4H38V46H17Z" fill="#f4efe7" />
-  <circle cx="46" cy="20" r="6" fill="#7be0d5" />
+  <rect width="64" height="64" rx="16" fill="#f6f7f5" />
+  <path d="M17 46V18h6.5v22.4H38V46H17Z" fill="#16232e" />
+  <circle cx="46" cy="20" r="6" fill="#167b73" />
 </svg>
