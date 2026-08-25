@@ -35,6 +35,11 @@ const topTopics = getAllTopics(notes).slice(0, 6);
           ))}
         </ul>
 
+        <a class="hero-github" href={siteConfig.github} target="_blank" rel="noreferrer">
+          <span class="profile-icon" aria-hidden="true">↗</span>
+          <span>GitHub 主页：https://github.com/EXIST-D</span>
+        </a>
+
         <div class="button-row">
           <a class="button primary" href={withBase('/projects')}>查看项目作品</a>
           <a class="button ghost" href={withBase('/notes')}>阅读学习笔记</a>
