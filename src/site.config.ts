@@ -23,7 +23,7 @@ export const navLinks = [
   { href: '/about', label: '关于' },
 ];
 
-export const focusAreas = siteData.focusAreas;
+export const techHighlights = siteData.techHighlights;
 export const skillGroups = siteData.skillGroups;
 export const principles = siteData.principles;
 export const timeline = siteData.timeline;

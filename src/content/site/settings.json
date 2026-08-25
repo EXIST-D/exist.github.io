@@ -11,11 +11,32 @@
     "resumeUrl":  "",
     "location":  "北京 / 远程",
     "availability":  "可实习 / 校招 / 社招岗位",
-    "focusAreas":  [
-                       "React / TypeScript 组件化开发",
-                       "Node.js 服务与接口设计",
-                       "前端性能、可维护性与工程化"
-                   ],
+    "techHighlights":  [
+                           {
+                               "title":  "编程语言",
+                               "description":  "熟悉 Python、R、MATLAB 等编程语言，能够完成日常开发与脚本编写。"
+                           },
+                           {
+                               "title":  "Agent 应用开发",
+                               "description":  "熟悉 LangChain / LangGraph 状态化工作流，掌握 Tool Calling、结构化输出、Checkpoint、Human-in-the-loop、Context Engineering、失败重试与动态重规划。"
+                           },
+                           {
+                               "title":  "向量检索和 RAG",
+                               "description":  "熟悉结构化切分、元数据过滤、Embedding、关键词与向量混合检索、RRF 和 Reranker，具备 PostgreSQL + pgvector 检索链路与 RAG 评测经验。"
+                           },
+                           {
+                               "title":  "AI 辅助开发",
+                               "description":  "熟悉 Claude Code、Codex 等 Agent 的使用，可用于代码理解、修改与开发辅助。"
+                           },
+                           {
+                               "title":  "数据工程",
+                               "description":  "熟练掌握 SQL、SPSS 等数据分析工具，熟悉 Spark、Kafka、DuckDB 等数据开发组件。"
+                           },
+                           {
+                               "title":  "项目管理",
+                               "description":  "熟练使用 Linux 基础命令，熟悉 Git 项目管理与协作流程。"
+                           }
+                       ],
     "skillGroups":  [
                         {
                             "title":  "前端",

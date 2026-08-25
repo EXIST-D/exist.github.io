@@ -237,6 +237,38 @@ main {
   margin: 1.5rem 0 0;
 }
 
+.hero-profile {
+  display: grid;
+  gap: 0.1rem;
+  max-width: 44rem;
+  padding: 0;
+  margin: 1.65rem 0 0;
+  list-style: none;
+}
+
+.hero-profile li {
+  display: grid;
+  grid-template-columns: 1.85rem minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: start;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-soft);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.profile-icon {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.6rem;
+  min-height: 1.6rem;
+  margin-top: 0.05rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  font-size: 0.82rem;
+}
+
 .button-row {
   display: flex;
   flex-wrap: wrap;
@@ -314,6 +346,7 @@ main {
 .clean-list,
 .footer-links,
 .stat-grid,
+.tech-stack-grid,
 .contact-list {
   list-style: none;
   padding: 0;
@@ -389,6 +422,50 @@ main {
 
 .stat-grid span {
   color: var(--text-soft);
+}
+
+.stat-grid-compact {
+  gap: 0.65rem;
+}
+
+.stat-grid-compact li {
+  padding: 0.75rem 0;
+}
+
+.stat-grid-compact strong {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.1;
+}
+
+.stat-grid-compact span {
+  font-size: 0.78rem;
+}
+
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.2rem 1rem;
+}
+
+.tech-stack-grid li {
+  display: grid;
+  align-content: start;
+  gap: 0.28rem;
+  min-width: 0;
+  padding: 0.2rem 0 0.78rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.tech-stack-grid strong {
+  color: var(--text);
+  font-size: 0.84rem;
+  letter-spacing: 0.01em;
+}
+
+.tech-stack-grid span {
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  line-height: 1.6;
 }
 
 .project-stack,
@@ -844,5 +921,13 @@ main {
   .entry-head {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .hero-profile li {
+    font-size: 0.93rem;
+  }
+
+  .tech-stack-grid {
+    grid-template-columns: 1fr;
   }
 }

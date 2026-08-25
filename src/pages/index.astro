@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import SectionHeading from '../components/SectionHeading.astro';
 import Tag from '../components/Tag.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { focusAreas, principles, siteConfig } from '../site.config';
+import { principles, siteConfig, techHighlights } from '../site.config';
 import { getAllTopics, slugifyTag } from '../utils/content';
 import { formatDate } from '../utils/format';
 import { withBase } from '../utils/url';
@@ -25,11 +25,15 @@ const topTopics = getAllTopics(notes).slice(0, 6);
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">{homeData.heroEyebrow}</p>
         <h1>{siteConfig.name}</h1>
-        <p class="hero-lead">
-          {siteConfig.role}。{homeData.heroLead}
-        </p>
+        <ul class="hero-profile" aria-label="个人简介">
+          {homeData.heroProfile.map((item) => (
+            <li>
+              <span class="profile-icon" aria-hidden="true">{item.icon}</span>
+              <span>{item.text}</span>
+            </li>
+          ))}
+        </ul>
 
         <div class="button-row">
           <a class="button primary" href={withBase('/projects')}>查看项目作品</a>
@@ -40,12 +44,12 @@ const topTopics = getAllTopics(notes).slice(0, 6);
 
       <aside class="hero-panel">
         <div>
-          <p class="panel-label">当前重点</p>
-          <ul class="info-list">
-            {focusAreas.map((item) => (
+          <p class="panel-label">技术栈</p>
+          <ul class="tech-stack-grid">
+            {techHighlights.map((item) => (
               <li>
-                <strong>{item}</strong>
-                <span>{homeData.focusHint}</span>
+                <strong>{item.title}</strong>
+                <span>{item.description}</span>
               </li>
             ))}
           </ul>
@@ -53,7 +57,7 @@ const topTopics = getAllTopics(notes).slice(0, 6);
 
         <div>
           <p class="panel-label">快速概览</p>
-          <ul class="stat-grid">
+          <ul class="stat-grid stat-grid-compact">
             <li>
               <strong>{projects.length}</strong>
               <span>项目作品</span>
