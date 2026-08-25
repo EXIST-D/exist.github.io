@@ -9,7 +9,7 @@ stack:
   - Python
   - LaTeX
 featured: true
-order: 0
+order: 1
 role: 独立设计与维护
 outcome: 将 SPSS 实证分析流程封装为开源 Skill，帮助 agent 更系统地完成中文实证论文分析与写作。
 repo: https://github.com/EXIST-D/spss-academic-workflow
