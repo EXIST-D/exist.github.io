@@ -21,7 +21,7 @@ function xmlEscape(input: string) {
 export async function GET(context: { site?: URL }) {
   const site = context.site ?? new URL(siteConfig.site);
   const notes = await getCollection('notes', ({ data }) => !data.draft);
-  const projects = await getCollection('projects');
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
   const topics = getAllTopics(notes);
 
   const routes = [

@@ -6,7 +6,8 @@ stack:
   - Astro
   - 内容集合
   - Markdown
-featured: true
+featured: false
+draft: true
 order: 4
 role: 独立实现
 outcome: 让项目描述从“简历条目”升级为“完整案例”

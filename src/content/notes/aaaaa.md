@@ -7,7 +7,7 @@ tags:
   - 记录
 featured: false
 minutes: 2
-draft: false
+draft: true
 ---
 
 这是一条临时笔记，用于快速验证排版与阅读体验。你可以替换为真实的学习内容。

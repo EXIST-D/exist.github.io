@@ -11,7 +11,9 @@ stack:
   - Docker Compose
   - R
 featured: true
-order: 0
+order: 4
+category: agent
+status: 持续开发
 role: 独立设计与持续开发
 outcome: 在单个研究者的本地环境中，建立项目隔离的知识、数据、方案、执行与制品链路，并将关键决策保留给研究者确认。
 repo: https://github.com/EXIST-D/MedStatForge

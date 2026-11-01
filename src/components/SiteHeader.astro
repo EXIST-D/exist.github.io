@@ -8,7 +8,7 @@ const pathname = withoutBase(Astro.url.pathname);
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href={withBase('/')}>
-      <span class="brand-mark">01</span>
+      <span class="brand-mark" aria-hidden="true">W.</span>
       <span class="brand-copy">
         <strong>{siteConfig.name}</strong>
         <small>{siteConfig.role}</small>
@@ -17,10 +17,11 @@ const pathname = withoutBase(Astro.url.pathname);
 
     <nav class="site-nav" aria-label="主导航">
       {navLinks.map((item) => (
-        <a class:list={['nav-link', pathname === item.href && 'is-active']} href={withBase(item.href)}>
+        <a class:list={['nav-link', (pathname === item.href || (item.href !== '/' && pathname.startsWith(`${item.href}/`))) && 'is-active']} aria-current={pathname === item.href ? 'page' : undefined} href={withBase(item.href)}>
           {item.label}
         </a>
       ))}
+      <a class="nav-link nav-product" href="https://exist.qd.je/" target="_blank" rel="noreferrer">在线刷题 ↗</a>
     </nav>
   </div>
 </header>

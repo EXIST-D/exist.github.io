@@ -7,7 +7,8 @@ stack:
   - TypeScript
   - Markdown
   - CSS
-featured: true
+featured: false
+draft: true
 order: 5
 role: 独立设计与开发
 outcome: 形成持续写作和公开表达的基础站点

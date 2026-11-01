@@ -1,10 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import SectionHeading from '../components/SectionHeading.astro';
-import Tag from '../components/Tag.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { principles, siteConfig, techHighlights } from '../site.config';
-import { getAllTopics, slugifyTag } from '../utils/content';
+import { siteConfig, techHighlights } from '../site.config';
 import { formatDate } from '../utils/format';
 import { withBase } from '../utils/url';
 import homeData from '../content/site/home.json';
@@ -12,13 +11,11 @@ import homeData from '../content/site/home.json';
 const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
-
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
+const recentProjects = projects.filter((entry) => ['weijin', 'interview-bank', 'gleaner'].includes(entry.slug));
+const researchProjects = projects.filter((entry) => !recentProjects.includes(entry));
 const featuredNotes = notes.filter((entry) => entry.data.featured).slice(0, 3);
-const featuredProjects = projects.filter((entry) => entry.data.featured).slice(0, 3);
-const totalTopics = new Set(notes.flatMap((entry) => entry.data.tags)).size;
-const topTopics = getAllTopics(notes).slice(0, 6);
+const product = homeData.onlineProduct;
 ---
 
 <BaseLayout>
@@ -26,192 +23,108 @@ const topTopics = getAllTopics(notes).slice(0, 6);
     <div class="container hero-grid">
       <div class="hero-copy">
         <h1>{siteConfig.name}</h1>
+        <p class="hero-positioning">{siteConfig.headline}</p>
         <ul class="hero-profile" aria-label="个人简介">
           {homeData.heroProfile.map((item) => (
-            <li>
-              <span class="profile-icon" aria-hidden="true">{item.icon}</span>
-              <span>{item.text}</span>
-            </li>
+            <li><span class="profile-icon" aria-hidden="true">{item.icon}</span><span>{item.text}</span></li>
           ))}
         </ul>
-
         <a class="hero-github" href={siteConfig.github} target="_blank" rel="noreferrer">
-          <span class="profile-icon" aria-hidden="true">↗</span>
-          <span>GitHub 主页：https://github.com/EXIST-D</span>
+          <span class="profile-icon" aria-hidden="true">↗</span><span>GitHub 主页：https://github.com/EXIST-D</span>
         </a>
-
         <div class="button-row">
-          <a class="button primary" href={withBase('/projects')}>查看项目作品</a>
+          <a class="button primary" href="#recent-projects">查看项目作品 <span aria-hidden="true">↓</span></a>
           <a class="button ghost" href={withBase('/notes')}>阅读学习笔记</a>
-          {siteConfig.resumeUrl && <a class="button ghost" href={siteConfig.resumeUrl}>查看简历</a>}
         </div>
+        <a class="hero-live-link" href={product.url} target="_blank" rel="noreferrer"><span class="live-dot" aria-hidden="true"></span>新上线 · Interview Bank 在线刷题 <span aria-hidden="true">↗</span></a>
       </div>
-
-      <aside class="hero-panel">
+      <aside class="hero-panel" aria-label="技术栈与个人概览">
         <div>
           <p class="panel-label">技术栈</p>
           <ul class="tech-stack-grid">
-            {techHighlights.map((item) => (
-              <li>
-                <strong>{item.title}</strong>
-                <span>{item.description}</span>
-              </li>
-            ))}
+            {techHighlights.map((item) => <li><strong>{item.title}</strong><span>{item.description}</span></li>)}
           </ul>
         </div>
-
         <div>
           <p class="panel-label">快速概览</p>
           <ul class="stat-grid stat-grid-compact">
-            <li>
-              <strong>{projects.length}</strong>
-              <span>项目作品</span>
-            </li>
-            <li>
-              <strong>{notes.length}</strong>
-              <span>公开笔记</span>
-            </li>
-            <li>
-              <strong>{totalTopics}</strong>
-              <span>涉及主题</span>
-            </li>
+            <li><strong>{projects.length}</strong><span>开源项目</span></li>
+            <li><strong>1</strong><span>在线产品</span></li>
+            <li><strong>{notes.length}</strong><span>公开笔记</span></li>
           </ul>
         </div>
-
-        <div>
-          <p class="panel-label">当前状态</p>
-          <ul class="info-list">
-            <li>
-              <strong>{siteConfig.availability}</strong>
-              <span>{siteConfig.location}</span>
-            </li>
-          </ul>
-        </div>
+        <div class="hero-availability"><strong>{siteConfig.availability}</strong><span>{siteConfig.location}</span></div>
       </aside>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section online-section" id="online" aria-labelledby="online-title">
     <div class="container">
-      <SectionHeading
-        eyebrow={homeData.projectSection.eyebrow}
-        title={homeData.projectSection.title}
-        body={homeData.projectSection.body}
-      />
-
-      <div class="feature-list">
-        {featuredProjects.map((project, index) => (
-          <article class="project-strip">
-            <div class="project-index">0{index + 1}</div>
-            <div class="project-copy">
-              <h3><a href={withBase(`/projects/${project.slug}`)}>{project.data.title}</a></h3>
-              <p class="project-summary">{project.data.description}</p>
-              <div class="project-meta">
-                <span>{project.data.period}</span>
-                <span>{project.data.role}</span>
-                <span>{project.data.outcome}</span>
-              </div>
-              <div class="project-stack">
-                {project.data.stack.map((item) => (
-                  <Tag label={item} />
-                ))}
-              </div>
-              <div class="link-row">
-                <a class="text-link" href={withBase(`/projects/${project.slug}`)}>查看案例</a>
-                {project.data.demo && <a class="text-link" href={project.data.demo}>在线预览</a>}
-                {project.data.repo && <a class="text-link" href={project.data.repo}>源码仓库</a>}
-              </div>
-            </div>
-          </article>
-        ))}
+      <div class="online-showcase">
+        <div class="online-copy">
+          <p class="section-eyebrow"><span class="live-dot" aria-hidden="true"></span>正在运行 · 在线测试版</p>
+          <p class="product-name">{product.name}</p>
+          <h2 id="online-title">{product.title}</h2>
+          <p>{product.description}</p>
+          <ul class="product-features">{product.features.map((item) => <li>{item}</li>)}</ul>
+          <div class="button-row">
+            <a class="button primary" href={product.url} target="_blank" rel="noreferrer">打开在线刷题站 ↗</a>
+            <a class="text-link" href={withBase('/projects/interview-bank')}>了解项目</a>
+          </div>
+          <p class="access-note">{product.accessNote}</p>
+        </div>
+        <a class="browser-preview" href={product.url} target="_blank" rel="noreferrer" aria-label="访问 Interview Bank 在线测试版">
+          <div class="browser-bar"><span aria-hidden="true">● ● ●</span><span>exist.qd.je</span><span aria-hidden="true">↗</span></div>
+          <img src={withBase('/images/interview-bank-public.png')} alt="Interview Bank 公开阅读首页：八股资料、公开面经、学习资料与个人面经入口" width="1440" height="900" loading="lazy" />
+          <span class="preview-caption">真实页面 · 公开资料免登录阅读</span>
+        </a>
       </div>
+      <div class="pipeline" aria-label="面试学习工具链">
+        <a href={withBase('/projects/gleaner')}><span>01 / 发现</span><strong>Gleaner 拾穗</strong><small>采集、筛选与来源保留</small></a>
+        <a href={withBase('/projects/interview-bank')}><span>02 / 整理</span><strong>Interview Bank Skill</strong><small>抽题、去重与答案研究</small></a>
+        <a href={product.url} target="_blank" rel="noreferrer"><span>03 / 练习</span><strong>在线阅读与复习 ↗</strong><small>手机刷题、笔记与复习记录</small></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="recent-projects">
+    <div class="container">
+      <div class="section-title-row">
+        <SectionHeading eyebrow={homeData.projectSection.eyebrow} title={homeData.projectSection.title} />
+        <a class="text-link" href={withBase('/projects')}>全部 {projects.length} 个项目 ↗</a>
+      </div>
+      <div class="recent-projects">{recentProjects.map((project) => <ProjectCard project={project} />)}</div>
+    </div>
+  </section>
+
+  <section class="section research-section">
+    <div class="container">
+      <SectionHeading eyebrow="持续积累" title="研究、统计与日常工具" body="从医学统计工作台到可复用的分析 Skills，继续完善已有的研究与开发实践。" />
+      <div class="research-grid">{researchProjects.map((project) => <ProjectCard project={project} compact />)}</div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <SectionHeading
-        eyebrow={homeData.notesSection.eyebrow}
-        title={homeData.notesSection.title}
-        body={homeData.notesSection.body}
-      />
-
+      <div class="section-title-row">
+        <SectionHeading eyebrow={homeData.notesSection.eyebrow} title={homeData.notesSection.title} body={homeData.notesSection.body} />
+        <a class="text-link" href={withBase('/notes')}>全部笔记 ↗</a>
+      </div>
       <div class="entry-list">
         {featuredNotes.map((note) => (
           <article class="entry-item">
-            <div class="entry-head">
-              <div>
-                <p class="list-kicker">最近笔记</p>
-                <h3><a href={withBase(`/notes/${note.slug}`)}>{note.data.title}</a></h3>
-              </div>
-              <div class="entry-date">
-                <span>{formatDate(note.data.publishedAt)}</span>
-                <span> · {note.data.minutes} 分钟阅读</span>
-              </div>
-            </div>
+            <div class="entry-head"><h3><a href={withBase(`/notes/${note.slug}`)}>{note.data.title}</a></h3><span class="entry-date">{formatDate(note.data.publishedAt)} · {note.data.minutes} 分钟阅读</span></div>
             <p>{note.data.description}</p>
-            <div class="entry-tags">
-              {note.data.tags.map((item) => (
-                <Tag label={item} />
-              ))}
-            </div>
           </article>
         ))}
-      </div>
-
-      <div class="page-panel topic-panel">
-        <p class="panel-label">热门专题</p>
-        <div class="topic-cloud">
-          {topTopics.map((topic) => (
-            <a class="topic-link" href={withBase(`/topics/${topic.slug}`)}>
-              <span>{topic.name}</span>
-              <small>{topic.count}</small>
-            </a>
-          ))}
-        </div>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="container">
-      <SectionHeading
-        eyebrow={homeData.aboutSection.eyebrow}
-        title={homeData.aboutSection.title}
-        body={homeData.aboutSection.body}
-      />
-
-      <div class="about-grid">
-        <div>
-          <p>{homeData.aboutSection.summary}</p>
-
-          <div class="about-columns">
-            <div>
-              <p class="panel-label">适合放什么</p>
-              <ul class="clean-list">
-                {homeData.aboutSection.suitableList.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p class="panel-label">这个版本强调</p>
-              <ul class="clean-list">
-                {principles.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-intro">
-          <p class="panel-label">{homeData.replacePanel.label}</p>
-          <h3>{homeData.replacePanel.title}</h3>
-          <p>{homeData.replacePanel.body}</p>
-          <a class="text-link" href={withBase('/about')}>{homeData.replacePanel.linkText}</a>
-        </div>
-      </div>
+    <div class="container about-home">
+      <SectionHeading eyebrow={homeData.aboutSection.eyebrow} title={homeData.aboutSection.title} />
+      <div><p>{homeData.aboutSection.summary}</p><div class="interest-list">{homeData.aboutSection.interests.map((item) => <span>{item}</span>)}</div><a class="text-link" href={withBase('/about')}>背景与联系方式 ↗</a></div>
     </div>
   </section>
 </BaseLayout>

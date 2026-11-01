@@ -24,6 +24,12 @@ export const navLinks = [
 ];
 
 export const techHighlights = siteData.techHighlights;
+export const projectCategories = [
+  { id: 'agent', label: 'Agent 与 RAG' },
+  { id: 'skills', label: 'Agent Skills' },
+  { id: 'data', label: '数据采集' },
+  { id: 'tools', label: '桌面工具' },
+] as const;
 export const skillGroups = siteData.skillGroups;
 export const principles = siteData.principles;
 export const timeline = siteData.timeline;
