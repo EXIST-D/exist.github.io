@@ -2,6 +2,7 @@
 import StructuredData from '../components/StructuredData.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import SiteSearch from '../components/SiteSearch.astro';
 import { siteConfig } from '../site.config';
 import { withBase } from '../utils/url';
 import '../styles/global.css';
@@ -57,7 +58,7 @@ const allStructuredData = defaultStructuredData.concat(
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={faviconPath} />
-    <meta name="theme-color" content="#f6f7f5" />
+    <meta name="theme-color" content="#f3f4f6" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -73,15 +74,10 @@ const allStructuredData = defaultStructuredData.concat(
   </head>
 
   <body>
-    <div class="page-bg" aria-hidden="true">
-      <div class="page-orb orb-one"></div>
-      <div class="page-orb orb-two"></div>
-      <div class="page-grid"></div>
-    </div>
-
-    <SiteHeader />
     <a class="skip-link" href="#main-content">跳到主要内容</a>
-    <main id="main-content">
+    <SiteHeader />
+    <SiteSearch />
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
     <SiteFooter />

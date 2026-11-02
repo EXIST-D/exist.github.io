@@ -2,22 +2,7 @@
 import { contactLinks, siteConfig } from '../site.config';
 import { resolveInternalHref } from '../utils/url';
 ---
-
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div>
-      <p class="footer-label">个人工作台</p>
-      <h2>{siteConfig.name}</h2>
-      <p>{siteConfig.intro}</p>
-    </div>
-
-    <div>
-      <p class="footer-label">联系方式</p>
-      <ul class="footer-links">
-        {contactLinks.map((item) => (
-          <li><a href={resolveInternalHref(item.href)}>{item.label}</a></li>
-        ))}
-      </ul>
-    </div>
-  </div>
+<footer class="site-footer container">
+  <div class="footer-top"><a class="footer-brand" href={resolveInternalHref('/')}>{siteConfig.name}<span>EXIST-D</span></a><ul class="footer-links">{contactLinks.map((item) => <li><a href={resolveInternalHref(item.href)}>{item.label}</a></li>)}</ul></div>
+  <div class="footer-bottom"><span>© {new Date().getFullYear()} {siteConfig.name} · 个人博客与开源实践</span><span>用 Astro 构建，持续记录与更新。</span></div>
 </footer>

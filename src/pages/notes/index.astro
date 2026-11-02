@@ -1,65 +1,22 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Tag from '../../components/Tag.astro';
+import NoteCard from '../../components/NoteCard.astro';
+import Icon from '../../components/Icon.astro';
 import { siteConfig } from '../../site.config';
 import { getAllTopics } from '../../utils/content';
-import { formatDate } from '../../utils/format';
 import { withBase } from '../../utils/url';
-
-const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
-);
+const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
 const topics = getAllTopics(notes);
 ---
-
 <BaseLayout title={`学习笔记 | ${siteConfig.name}`} description="公开记录学习过程、问题拆解与技术复盘。">
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">笔记</p>
-      <h1>学习笔记</h1>
-      <p>项目实践、技术选择与学习过程的记录。</p>
-    </div>
+  <section class="page-hero container">
+    <a class="breadcrumb" href={withBase('/')}>首页 <span>/</span> 笔记</a>
+    <h1>学习笔记<span class="page-title-en">Blog & Notes</span></h1>
+    <p>记录项目里的思考、技术选择，以及学习过程。</p>
   </section>
-
-  <section class="section">
-    <div class="container notes-grid">
-      <div class="page-panel">
-        <p class="panel-label">按专题浏览</p>
-        <div class="topic-cloud">
-          {topics.map((topic) => (
-            <a class="topic-link" href={withBase(`/topics/${topic.slug}`)}>
-              <span>{topic.name}</span>
-              <small>{topic.count}</small>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {notes.length ? (
-        notes.map((note) => (
-          <article class="entry-item">
-            <div class="entry-head">
-              <div>
-                <p class="list-kicker">文章</p>
-                <h3><a href={withBase(`/notes/${note.slug}`)}>{note.data.title}</a></h3>
-              </div>
-              <div class="entry-date">
-                <span>{formatDate(note.data.publishedAt)}</span>
-                <span> · {note.data.minutes} 分钟阅读</span>
-              </div>
-            </div>
-            <p>{note.data.description}</p>
-            <div class="entry-tags">
-              {note.data.tags.map((item) => (
-                <Tag label={item} />
-              ))}
-            </div>
-          </article>
-        ))
-      ) : (
-        <div class="empty-state">这里还没有笔记内容，可以先从一篇项目复盘或一篇学习总结开始。</div>
-      )}
-    </div>
+  <section class="container blog-layout">
+    <div><div class="list-toolbar"><span>共 {notes.length} 篇公开笔记</span><span>按发布时间排序</span></div><div class="note-list">{notes.map((note) => <NoteCard note={note} />)}</div></div>
+    <aside class="blog-sidebar"><div class="sidebar-panel"><h2><Icon name="tag" size={19} />阅读主题</h2><div class="topic-cloud">{topics.map((topic) => <a class="topic-link" href={withBase(`/topics/${topic.slug}`)}>{topic.name}<small>{topic.count}</small></a>)}</div><a class="text-link" href={withBase('/topics')}>查看全部专题 <Icon name="arrow" size={15} /></a></div><div class="sidebar-panel"><h2>保持更新</h2><p>通过 RSS 订阅，在你习惯的阅读器里查看新文章。</p><a class="text-link" href={withBase('/rss.xml')}>订阅 RSS <Icon name="arrow" size={15} /></a></div></aside>
   </section>
 </BaseLayout>

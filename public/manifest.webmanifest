@@ -3,8 +3,8 @@
   "short_name": "王明旭",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f6f7f5",
-  "theme_color": "#f6f7f5",
+  "background_color": "#f3f4f6",
+  "theme_color": "#3566cf",
   "icons": [
     {
       "src": "favicon.svg",

@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import { formatDate } from '../utils/format';
+import { slugifyTag } from '../utils/content';
+import { withBase } from '../utils/url';
+interface Props { note: CollectionEntry<'notes'>; }
+const { note } = Astro.props;
+---
+<article class="note-card">
+  <time datetime={note.data.publishedAt.toISOString()}>{formatDate(note.data.publishedAt)}</time>
+  <h3><a href={withBase(`/notes/${note.slug}`)}>{note.data.title}<Icon name="arrow" size={19} /></a></h3>
+  <p>{note.data.description}</p>
+  <span class="note-reading"><Icon name="clock" size={15} />{note.data.minutes} 分钟阅读</span>
+  <div class="entry-tags">{note.data.tags.map((tag) => <a class="tag" href={withBase(`/topics/${slugifyTag(tag)}`)}>{tag}</a>)}</div>
+</article>

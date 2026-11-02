@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { projectCategories, siteConfig } from '../../site.config';
+import { withBase } from '../../utils/url';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -10,10 +11,10 @@ const projects = (await getCollection('projects', ({ data }) => !data.draft)).so
 <BaseLayout title={`项目作品 | ${siteConfig.name}`} description="个人 Agent、文学 RAG、面试学习工具与医学统计自动化的开源项目案例。">
   <section class="page-hero">
     <div class="container">
-      <p class="eyebrow">开源实践 / PROJECTS</p>
-      <h1>项目作品</h1>
-      <p>从个人 Agent 到研究自动化，也把每天遇到的问题做成可以使用的工具。</p>
-      <a class="hero-live-link" href="https://exist.qd.je/" target="_blank" rel="noreferrer"><span class="live-dot" aria-hidden="true"></span>在线体验 Interview Bank ↗</a>
+      <a class="breadcrumb" href={withBase('/')}>首页 <span>/</span> 项目</a>
+      <h1>项目作品<span class="page-title-en">Projects</span></h1>
+      <p>个人 Agent、学习工具与研究自动化。这里记录我做了什么，如何实现，以及仍在探索的问题。</p>
+      <a class="hero-live-link" href="https://exist.qd.je/" target="_blank" rel="noreferrer"><span class="live-dot" aria-hidden="true"></span>Interview Bank 在线测试中</a>
     </div>
   </section>
   <section class="section">
@@ -23,7 +24,7 @@ const projects = (await getCollection('projects', ({ data }) => !data.draft)).so
         {projectCategories.map((category) => <button type="button" data-filter={category.id} aria-pressed="false">{category.label} <span>{projects.filter((project) => project.data.category === category.id).length}</span></button>)}
       </div>
       <p class="filter-summary" role="status" aria-live="polite">显示全部 {projects.length} 个项目</p>
-      <div class="all-projects">{projects.map((project) => <ProjectCard project={project} compact={!project.data.image} />)}</div>
+      <div class="all-projects">{projects.map((project) => <ProjectCard project={project} />)}</div>
     </div>
   </section>
 </BaseLayout>

@@ -56,12 +56,17 @@ const structuredData = {
             ))}
           </div>
           <div class="link-row">
-            {entry.data.demo && <a class="button primary" href={entry.data.demo} target="_blank" rel="noreferrer">在线体验 ↗</a>}
-            {entry.data.repo && <a class="button ghost" href={entry.data.repo} target="_blank" rel="noreferrer">源码仓库 ↗</a>}
+            {entry.data.demo && <a class="button primary" href={entry.data.demo} target="_blank" rel="noreferrer">在线体验</a>}
+            {entry.data.repo && <a class="button ghost" href={entry.data.repo} target="_blank" rel="noreferrer">源码仓库</a>}
           </div>
         </header>
 
-        {entry.data.image && <figure class="project-figure"><img src={withBase(entry.data.image)} alt={entry.data.imageAlt ?? entry.data.title} width="1440" height="900" loading="lazy" /><figcaption>{entry.data.imageAlt} · 资料核对于 2026-11-01</figcaption></figure>}
+        {entry.data.image && (
+            <figure class="project-figure">
+              <img src={withBase(entry.data.image)} alt={entry.data.imageAlt ?? entry.data.title} width="1440" height="900" loading="eager" />
+              <figcaption>{entry.data.imageAlt}</figcaption>
+            </figure>
+        )}
 
         <div class="prose">
           <Content />

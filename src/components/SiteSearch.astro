@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Icon from './Icon.astro';
+import { withBase } from '../utils/url';
+const projects = await getCollection('projects', ({ data }) => !data.draft);
+const notes = await getCollection('notes', ({ data }) => !data.draft);
+const entries = [
+  ...projects.sort((a, b) => a.data.order - b.data.order).map((entry) => ({ title: entry.data.title, description: entry.data.description, tags: entry.data.stack, type: '项目', url: withBase(`/projects/${entry.slug}`) })),
+  ...notes.map((entry) => ({ title: entry.data.title, description: entry.data.description, tags: entry.data.tags, type: '笔记', url: withBase(`/notes/${entry.slug}`) })),
+];
+---
+<dialog id="site-search" class="search-dialog" aria-labelledby="search-title" data-entries={JSON.stringify(entries)}>
+  <div class="search-heading"><h2 id="search-title">搜索项目与笔记</h2><button type="button" class="icon-button" data-close-search aria-label="关闭搜索"><Icon name="close" /></button></div>
+  <label class="search-field"><Icon name="search" /><input type="search" placeholder="项目名称、技术栈或关键词…" aria-label="搜索关键词" autocomplete="off" /></label>
+  <p class="search-summary" role="status" aria-live="polite">输入关键词，查找公开项目与学习笔记。</p>
+  <ul class="search-results"></ul>
+  <div class="search-hint">按 <kbd>Esc</kbd> 关闭 · <kbd>Tab</kbd> 选择结果</div>
+</dialog>
+<script>
+  import { searchEntries } from '../utils/search.mjs';
+  const dialog = document.querySelector<HTMLDialogElement>('#site-search');
+  if (dialog) {
+    const input = dialog.querySelector<HTMLInputElement>('input')!;
+    const results = dialog.querySelector<HTMLUListElement>('.search-results')!;
+    const summary = dialog.querySelector<HTMLElement>('.search-summary')!;
+    const entries = JSON.parse(dialog.dataset.entries ?? '[]');
+    const openSearch = () => { if (!dialog.open) dialog.showModal(); input.focus(); };
+    document.querySelector('[data-open-search]')?.addEventListener('click', openSearch);
+    dialog.querySelector('[data-close-search]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close(); } });
+    document.addEventListener('keydown', (event) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); openSearch(); } });
+    input.addEventListener('input', () => {
+      const matches = searchEntries(entries, input.value);
+      results.replaceChildren();
+      summary.textContent = !input.value.trim() ? '输入关键词，查找公开项目与学习笔记。' : matches.length ? `找到 ${matches.length} 条结果` : '没有找到相关内容，试试其他关键词。';
+      for (const entry of matches) {
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = entry.url;
+        const type = document.createElement('span'); type.textContent = entry.type;
+        const title = document.createElement('strong'); title.textContent = entry.title;
+        const description = document.createElement('p'); description.textContent = entry.description;
+        link.append(type, title, description); item.append(link); results.append(item);
+      }
+    });
+  }
+</script>
