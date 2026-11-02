@@ -47,7 +47,11 @@ main { min-height: 65vh; }
 
 /* Floating navigation: a compact, consistent entry to every content type. */
 .site-header { position: sticky; top: 16px; z-index: 30; margin: 18px 0 32px; }
-.header-inner { min-height: 72px; display: flex; align-items: center; gap: 24px; padding: 10px 18px; border: 1px solid #dfe3eacc; border-radius: 20px; background: #fffffff5; box-shadow: 0 4px 16px #1d293c08; backdrop-filter: blur(16px); }
+.header-inner { min-height: 72px; display: flex; align-items: center; gap: 24px; padding: 10px 18px; border: 1px solid #dfe3eacc; border-radius: 20px; background: #fffffff5; box-shadow: 0 4px 16px #1d293c08; backdrop-filter: blur(16px); transition: transform 220ms ease, opacity 180ms ease; }
+.site-header.is-hidden { pointer-events: none; }
+.site-header.is-hidden .header-inner { transform: translateY(calc(-100% - 40px)); opacity: 0; }
+.scroll-progress { position: fixed; inset: 0 0 auto; z-index: 50; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; opacity: 0; transition: opacity 180ms; pointer-events: none; }
+.scroll-progress.is-visible { opacity: .65; }
 .brand { display: inline-flex; align-items: center; gap: 11px; margin-right: auto; min-width: 0; }
 .brand-mark { display: grid; place-content: center; grid-auto-flow: column; align-items: baseline; height: 40px; width: 40px; border-radius: 12px; background: var(--accent); color: white; font-size: 23px; font-weight: 800; letter-spacing: -2px; }
 .brand-mark span { color: #bdd4ff; }
@@ -65,7 +69,7 @@ main { min-height: 65vh; }
 .nav-product { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; min-height: 36px; border-radius: 9px; background: var(--accent); color: white; font-size: 12px; white-space: nowrap; }
 .nav-product:hover { background: var(--accent-strong); color: white; }
 
-/* One complete profile card, with a single-column skill ledger. */
+/* The profile and a short, editable snapshot of current work. */
 .home-profile { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); overflow: hidden; }
 .profile-intro { padding: 32px; }
 .profile-greeting { display: flex; align-items: center; gap: 7px; color: var(--text-muted); font-size: 11px; margin: 0 0 14px; }
@@ -74,6 +78,7 @@ main { min-height: 65vh; }
 .profile-name h1 { font-size: 38px; margin: 0; letter-spacing: -.04em; line-height: 1.35; font-weight: 700; }
 .profile-name > span { font-size: 12px; color: var(--text-muted); letter-spacing: .06em; }
 .profile-lead { font-size: 14px; color: var(--text-soft); margin: 10px 0 24px; }
+.profile-name, .profile-lead { opacity: calc(1 - var(--intro-fade, 0) * .35); }
 .hero-profile { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
 .hero-profile li { display: flex; align-items: flex-start; gap: 11px; color: var(--text-soft); font-size: 14px; line-height: 1.85; }
 .profile-icon { flex: 0 0 25px; width: 25px; height: 25px; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; background: var(--surface-soft); }
@@ -86,15 +91,19 @@ main { min-height: 65vh; }
 .button.ghost:hover { border-color: #a9bde8; color: var(--accent); background: #fafcff; }
 .profile-footer { display: flex; flex-wrap: wrap; gap: 12px 20px; border-top: 1px solid var(--line); padding-top: 17px; margin-top: 24px; font-size: 10px; color: var(--text-muted); }
 .profile-footer > span { display: flex; align-items: center; gap: 5px; }
-.profile-skills { padding: 32px 28px; border-left: 1px solid var(--line); background: #fcfcfe; }
-.skills-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
-.skills-heading h2 { margin: 0; font-size: 15px; }
-.skills-heading > span { color: var(--text-muted); font-size: 10px; }
-.tech-stack-grid { display: grid; grid-template-columns: 1fr; list-style: none; padding: 0; margin: 0; }
-.tech-stack-grid li { display: grid; grid-template-columns: 101px minmax(0,1fr); gap: 12px; padding: 11px 0; border-bottom: 1px dashed var(--line); align-items: baseline; }
-.tech-stack-grid li:last-child { border-bottom: 0; padding-bottom: 0; }
-.tech-stack-grid strong { font-size: 12px; font-weight: 600; white-space: nowrap; }
-.tech-stack-grid span { font-size: 12.5px; line-height: 1.85; color: var(--text-soft); }
+.profile-now { display: flex; flex-direction: column; padding: 32px 28px 24px; border-left: 1px solid var(--line); background: #fcfcfe; }
+.now-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.now-heading h2 { margin: 0; font-size: 15px; }
+.now-heading time { color: var(--text-muted); font-size: 10px; }
+.now-list { list-style: none; padding: 0; margin: 0; }
+.now-list li { padding-left: 17px; position: relative; border-bottom: 1px dashed var(--line); }
+.now-list li:last-child { border-bottom: 0; }
+.now-list li::before { content: ''; position: absolute; width: 5px; height: 5px; top: 22px; left: 0; border-radius: 50%; background: #9aafd5; }
+.now-list a { display: block; padding: 11px 0; }
+.now-list h3 { margin: 0 0 4px; font-size: 14px; font-weight: 600; }
+.now-list p { margin: 0; font-size: 12.5px; color: var(--text-soft); line-height: 1.9; }
+.now-list a:hover h3 { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+.now-about { margin-top: auto; padding-top: 14px; font-size: 11px; align-self: flex-start; }
 .product-strip { display: flex; align-items: center; gap: 16px; background: #edf2fc; border: 1px solid #dce5f8; padding: 18px 24px; border-radius: 16px; margin-top: 20px; }
 .product-symbol { height: 42px; width: 42px; flex: 0 0 42px; border-radius: 11px; background: white; color: var(--accent); font-size: 16px; font-weight: 800; display: grid; place-items: center; border: 1px solid #dce5f8; }
 .product-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -294,8 +303,7 @@ kbd { border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-
   .header-inner { gap: 16px; }
   .nav-link { padding-inline: 11px; }
   .profile-intro { padding: 28px; }
-  .profile-skills { padding: 28px 24px; }
-  .tech-stack-grid li { grid-template-columns: 92px minmax(0,1fr); gap: 9px; }
+  .profile-now { padding: 28px 24px; }
   .home-writing, .blog-layout { grid-template-columns: minmax(0,1fr) 250px; gap: 22px; }
 }
 @media (max-width: 900px) {
@@ -308,11 +316,10 @@ kbd { border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-
   .nav-link { padding-inline: 10px; font-size: 12px; }
   .home-profile { grid-template-columns: 1fr; }
   .profile-intro { padding: 30px; }
-  .profile-skills { padding: 26px 30px; border-left: 0; border-top: 1px solid var(--line); }
+  .profile-now { padding: 26px 30px; border-left: 0; border-top: 1px solid var(--line); }
   .hero-profile li { font-size: 14px; }
-  .tech-stack-grid strong, .tech-stack-grid span { font-size: 13px; }
-  .tech-stack-grid li { grid-template-columns: 120px minmax(0,1fr); padding: 14px 0; }
-  .skills-heading h2 { font-size: 17px; }
+  .now-list p { font-size: 13px; }
+  .now-heading h2 { font-size: 17px; }
   .project-card { padding: 22px; }
   .project-heading h3 { font-size: 18px; }
   .project-description { font-size: 13px; }
@@ -343,10 +350,9 @@ kbd { border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-
   .hero-profile li { font-size: 13px; }
   .hero-github { font-size: 11px; }
   .profile-footer { gap: 10px 16px; line-height: 1.9; }
-  .profile-skills { padding: 24px; }
-  .tech-stack-grid li { grid-template-columns: 1fr; gap: 6px; padding: 14px 0; }
-  .tech-stack-grid strong { font-size: 12px; }
-  .tech-stack-grid span { font-size: 13px; line-height: 1.95; }
+  .profile-now { padding: 24px; }
+  .now-list a { padding-block: 14px; }
+  .now-list li::before { top: 25px; }
   .product-strip { flex-wrap: wrap; padding: 18px; gap: 12px; margin-top: 16px; }
   .product-strip > div { flex: 1; min-width: 180px; }
   .product-strip > .button { margin-left: 54px; }
@@ -400,4 +406,11 @@ kbd { border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .home-profile { animation: profile-enter 450ms ease-out both; }
+}
+@keyframes profile-enter {
+  from { opacity: .4; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -17,6 +17,32 @@
       "text": "常用工具：R、Python"
     }
   ],
+  "nowSection": {
+    "title": "正在做的事",
+    "updatedAt": "2026-11-02",
+    "items": [
+      {
+        "title": "WeiJin · 未尽",
+        "description": "打磨文学 RAG、人格与记忆管理，让作品讨论中的引用更可追溯。",
+        "href": "/projects/weijin"
+      },
+      {
+        "title": "面试学习工具链",
+        "description": "连接 Gleaner 的素材采集、Interview Bank 的题库整理和在线碎片复习。",
+        "href": "/projects/interview-bank"
+      },
+      {
+        "title": "MedStatForge",
+        "description": "持续开发医学统计 Agent，完善方案审阅、人工确认与统计交付流程。",
+        "href": "/projects/medstatforge"
+      },
+      {
+        "title": "学习与记录",
+        "description": "整理 Agent、RAG 与数据工程的实践，把开发过程写成公开笔记。",
+        "href": "/notes"
+      }
+    ]
+  },
   "projectSection": {
     "eyebrow": "精选项目",
     "title": "项目案例展示"

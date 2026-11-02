@@ -1,0 +1,61 @@
+<div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
+  const profileName = document.querySelector<HTMLElement>('.profile-name');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+  let previousY = Math.max(0, window.scrollY);
+  let direction = 0;
+  let distance = 0;
+
+  function updateEffects() {
+    frame = 0;
+    const y = Math.max(0, window.scrollY);
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const fraction = scrollable > 0 ? Math.min(1, y / scrollable) : 0;
+    if (progress) {
+      progress.style.transform = `scaleX(${fraction})`;
+      progress.classList.toggle('is-visible', y > 80 && scrollable > 0);
+    }
+
+    if (profileName) {
+      const fade = reducedMotion.matches ? 0 : Math.min(1, Math.max(0, (120 - profileName.getBoundingClientRect().top) / 200));
+      document.documentElement.style.setProperty('--intro-fade', String(fade));
+    }
+
+    if (header) {
+      const keepVisible = reducedMotion.matches || y < 180 || header.contains(document.activeElement) || !!document.querySelector('dialog[open]');
+      if (keepVisible) {
+        header.classList.remove('is-hidden');
+        distance = 0;
+      } else {
+        const delta = y - previousY;
+        if (Math.abs(delta) > 0.5) {
+          const nextDirection = Math.sign(delta);
+          if (nextDirection !== direction) distance = 0;
+          direction = nextDirection;
+          distance += Math.abs(delta);
+          if (distance >= 14) header.classList.toggle('is-hidden', direction > 0);
+        }
+      }
+    }
+    previousY = y;
+  }
+
+  function scheduleUpdate() {
+    if (!frame) frame = window.requestAnimationFrame(updateEffects);
+  }
+
+  window.addEventListener('scroll', scheduleUpdate, { passive: true });
+  window.addEventListener('resize', scheduleUpdate);
+  window.addEventListener('pageshow', scheduleUpdate);
+  document.addEventListener('focusin', scheduleUpdate);
+  reducedMotion.addEventListener('change', scheduleUpdate);
+  if ('ResizeObserver' in window) {
+    const main = document.querySelector('main');
+    if (main) new ResizeObserver(scheduleUpdate).observe(main);
+  }
+  updateEffects();
+</script>

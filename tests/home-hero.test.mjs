@@ -14,11 +14,10 @@ test('replaces the template hero copy with a personal profile', () => {
   assert.match(homePage, /class="hero-profile"/);
 });
 
-test('presents the supplied technical stack and compact project statistics', () => {
+test('preserves the supplied technical-stack content and compact project statistics', () => {
   assert.match(settings, /"techHighlights"/);
   assert.match(settings, /"Agent 应用开发"/);
   assert.match(settings, /"向量检索和 RAG"/);
-  assert.match(homePage, /class="tech-stack-grid"/);
   assert.match(homePage, /stat-grid-compact/);
   assert.match(styles, /\.stat-grid-compact/);
 });

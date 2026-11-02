@@ -3,6 +3,7 @@ import StructuredData from '../components/StructuredData.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteSearch from '../components/SiteSearch.astro';
+import SiteEffects from '../components/SiteEffects.astro';
 import { siteConfig } from '../site.config';
 import { withBase } from '../utils/url';
 import '../styles/global.css';
@@ -75,6 +76,7 @@ const allStructuredData = defaultStructuredData.concat(
 
   <body>
     <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <SiteEffects />
     <SiteHeader />
     <SiteSearch />
     <main id="main-content" tabindex="-1">

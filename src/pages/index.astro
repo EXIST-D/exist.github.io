@@ -4,7 +4,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import NoteCard from '../components/NoteCard.astro';
 import Icon from '../components/Icon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { siteConfig, techHighlights } from '../site.config';
+import { siteConfig } from '../site.config';
 import { getAllTopics } from '../utils/content';
 import { withBase } from '../utils/url';
 import homeData from '../content/site/home.json';
@@ -14,7 +14,7 @@ const selectedProjects = projects.filter((entry) => ['weijin', 'interview-bank',
 const topics = getAllTopics(notes);
 ---
 <BaseLayout>
-  <section class="container home-profile" aria-label="个人简介与技术栈">
+  <section class="container home-profile" aria-label="个人简介与近期动态">
     <div class="profile-intro">
       <p class="profile-greeting"><span class="status-dot" aria-hidden="true"></span>你好，欢迎来到我的博客</p>
       <div class="profile-name"><h1>{siteConfig.name}</h1><span>EXIST-D</span></div>
@@ -29,9 +29,14 @@ const topics = getAllTopics(notes);
       </div>
       <div class="profile-footer"><span><Icon name="location" size={14} />{siteConfig.location}</span><span class="availability"><span class="status-dot" aria-hidden="true"></span>{siteConfig.availability}</span></div>
     </div>
-    <aside class="profile-skills" aria-labelledby="skills-title">
-      <div class="skills-heading"><h2 id="skills-title">技术栈</h2><span>日常使用与项目实践</span></div>
-      <ul class="tech-stack-grid">{techHighlights.map((item) => <li><strong>{item.title}</strong><span>{item.description}</span></li>)}</ul>
+    <aside class="profile-now" aria-labelledby="now-title">
+      <div class="now-heading"><h2 id="now-title">{homeData.nowSection.title}</h2><time datetime={homeData.nowSection.updatedAt}>更新于 {homeData.nowSection.updatedAt.slice(0, 7).replace('-', '.')}</time></div>
+      <ul class="now-list">
+        {homeData.nowSection.items.map((item) => (
+          <li><a href={withBase(item.href)}><h3>{item.title}</h3><p>{item.description}</p></a></li>
+        ))}
+      </ul>
+      <a class="text-link now-about" href={withBase('/about#tech-stack')}>了解我的技术栈与背景</a>
     </aside>
   </section>
 
