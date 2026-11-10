@@ -29,6 +29,7 @@ export const projectCategories = [
   { id: 'skills', label: 'Agent Skills' },
   { id: 'data', label: '数据采集' },
   { id: 'tools', label: '桌面工具' },
+  { id: 'game', label: '网页游戏' },
 ] as const;
 export const skillGroups = siteData.skillGroups;
 export const principles = siteData.principles;

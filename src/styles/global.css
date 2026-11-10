@@ -104,13 +104,15 @@ main { min-height: 65vh; }
 .now-list p { margin: 0; font-size: 12.5px; color: var(--text-soft); line-height: 1.9; }
 .now-list a:hover h3 { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
 .now-about { margin-top: auto; padding-top: 14px; font-size: 11px; align-self: flex-start; }
-.product-strip { display: flex; align-items: center; gap: 16px; background: #edf2fc; border: 1px solid #dce5f8; padding: 18px 24px; border-radius: 16px; margin-top: 20px; }
-.product-symbol { height: 42px; width: 42px; flex: 0 0 42px; border-radius: 11px; background: white; color: var(--accent); font-size: 16px; font-weight: 800; display: grid; place-items: center; border: 1px solid #dce5f8; }
+.product-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
+.product-strip { --product-text: var(--accent); --product-line: #dce5f8; display: flex; align-items: center; gap: 12px; background: #edf2fc; border: 1px solid var(--product-line); padding: 16px 18px; border-radius: 16px; }
+.product-green { --product-text: #3c694d; --product-line: #d3e5d8; background: #ebf4ed; }
+.product-symbol { height: 42px; width: 42px; flex: 0 0 42px; border-radius: 11px; background: white; color: var(--product-text); font-size: 16px; font-weight: 800; display: grid; place-items: center; border: 1px solid var(--product-line); }
 .product-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .product-title h2 { font-size: 14px; margin: 0; }
-.small-badge { font-size: 9px; color: var(--accent); background: #ffffffa0; border: 1px solid #cedbf4; border-radius: 5px; padding: 0 6px; }
+.small-badge { font-size: 10px; color: var(--product-text); background: #ffffffa0; border: 1px solid var(--product-line); border-radius: 5px; padding: 0 6px; }
 .product-strip p { margin: 5px 0 0; font-size: 11px; color: var(--text-soft); }
-.product-strip > .button { margin-left: auto; flex-shrink: 0; border-color: #d2ddf1; min-height: 38px; padding-block: 8px; }
+.product-strip > .button { margin-left: auto; flex-shrink: 0; border-color: var(--product-line); min-height: 38px; padding: 8px 12px; white-space: nowrap; }
 
 /* Project cards borrow the case-first structure of yuanblog. */
 .section { margin-top: 38px; }
@@ -151,7 +153,8 @@ a.tag:hover, .topic-link:hover { background: var(--accent-soft); border-color: #
 .project-filters button[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: white; }
 .project-filters button span { font-size: 10px; margin-left: 7px; opacity: .7; }
 .filter-summary { font-size: 11px; color: var(--text-muted); margin: 14px 0 20px; }
-.hero-live-link { display: inline-flex; align-items: center; gap: 7px; color: var(--accent); margin-top: 4px; font-size: 12px; }
+.hero-live-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 4px; }
+.hero-live-link { display: inline-flex; align-items: center; gap: 7px; color: var(--accent); font-size: 12px; }
 .live-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 100%; }
 
 /* Article cards and a real tag sidebar, following Joye's reading pattern. */
@@ -353,8 +356,9 @@ kbd { border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-
   .profile-now { padding: 24px; }
   .now-list a { padding-block: 14px; }
   .now-list li::before { top: 25px; }
-  .product-strip { flex-wrap: wrap; padding: 18px; gap: 12px; margin-top: 16px; }
-  .product-strip > div { flex: 1; min-width: 180px; }
+  .product-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
+  .product-strip { flex-wrap: wrap; }
+  .product-strip > div { flex: 1 1 150px; }
   .product-strip > .button { margin-left: 54px; }
   .product-title h2 { font-size: 13px; }
   .product-strip p { font-size: 11px; }

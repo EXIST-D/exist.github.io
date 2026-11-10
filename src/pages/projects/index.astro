@@ -4,17 +4,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { projectCategories, siteConfig } from '../../site.config';
 import { withBase } from '../../utils/url';
+import homeData from '../../content/site/home.json';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title={`项目作品 | ${siteConfig.name}`} description="个人 Agent、文学 RAG、面试学习工具与医学统计自动化的开源项目案例。">
+<BaseLayout title={`项目作品 | ${siteConfig.name}`} description="多人网页游戏、个人 Agent、文学 RAG、面试学习工具与医学统计自动化的项目案例。">
   <section class="page-hero">
     <div class="container">
       <a class="breadcrumb" href={withBase('/')}>首页 <span>/</span> 项目</a>
       <h1>项目作品<span class="page-title-en">Projects</span></h1>
-      <p>个人 Agent、学习工具与研究自动化。这里记录我做了什么，如何实现，以及仍在探索的问题。</p>
-      <a class="hero-live-link" href="https://exist.qd.je/" target="_blank" rel="noreferrer"><span class="live-dot" aria-hidden="true"></span>Interview Bank 在线测试中</a>
+      <p>多人网页游戏、个人 Agent、学习工具与研究自动化。这里记录我做了什么，如何实现，以及仍在探索的问题。</p>
+      <div class="hero-live-links">
+        {homeData.onlineProducts.map((product) => <a class="hero-live-link" href={product.url} target="_blank" rel="noreferrer"><span class="live-dot" aria-hidden="true"></span>{product.name}</a>)}
+      </div>
     </div>
   </section>
   <section class="section">

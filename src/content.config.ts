@@ -22,7 +22,7 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     order: z.number().int().default(99),
     draft: z.boolean().default(false),
-    category: z.enum(['agent', 'skills', 'data', 'tools']).default('tools'),
+    category: z.enum(['agent', 'skills', 'data', 'tools', 'game']).default('tools'),
     status: z.string().default('持续迭代'),
     image: z.string().optional(),
     imageAlt: z.string().optional(),

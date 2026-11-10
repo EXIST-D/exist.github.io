@@ -19,8 +19,13 @@
   ],
   "nowSection": {
     "title": "正在做的事",
-    "updatedAt": "2026-11-02",
+    "updatedAt": "2026-11-10",
     "items": [
+      {
+        "title": "PixelCampus · 像素校园",
+        "description": "开发和运营多人网页游戏，持续打磨校园探索、联机玩法和玩家存档。",
+        "href": "/projects/pixelcampus"
+      },
       {
         "title": "WeiJin · 未尽",
         "description": "打磨文学 RAG、人格与记忆管理，让作品讨论中的引用更可追溯。",
@@ -35,11 +40,6 @@
         "title": "MedStatForge",
         "description": "持续开发医学统计 Agent，完善方案审阅、人工确认与统计交付流程。",
         "href": "/projects/medstatforge"
-      },
-      {
-        "title": "学习与记录",
-        "description": "整理 Agent、RAG 与数据工程的实践，把开发过程写成公开笔记。",
-        "href": "/notes"
       }
     ]
   },
@@ -58,12 +58,24 @@
     "summary": "我是王明旭，中国地质大学（北京）应用统计专业硕士研究生。我的实践从统计分析延伸到 AI 应用开发，近期围绕个人 Agent、检索增强生成与面试学习工具持续开发。",
     "interests": ["AI Agent 与大模型应用", "检索增强生成与知识管理", "统计分析与研究流程自动化"]
   },
-  "onlineProduct": {
-    "name": "Interview Bank 在线版",
-    "url": "https://exist.qd.je/",
-    "title": "把碎片时间，留给下一道面试题。",
-    "description": "公开资料随时读，个人题库慢慢积累。在电脑上整理，在手机上利用碎片时间复习。",
-    "accessNote": "公开资料免登录阅读；个人面经、笔记、收藏和练习记录需登录。当前为在线测试版。",
-    "features": ["八股资料与公开面经", "手机阅读与随机一题", "个人笔记与复习记录"]
-  }
+  "onlineProducts": [
+    {
+      "name": "PixelCampus · 像素校园",
+      "symbol": "像",
+      "tone": "green",
+      "status": "持续运营",
+      "url": "https://exist.qd.je/pixel/",
+      "description": "在像素校园里散步、钓鱼、找猫，也能和其他玩家一起逛校园。",
+      "action": "进入游戏"
+    },
+    {
+      "name": "Interview Bank 在线版",
+      "symbol": "IB",
+      "tone": "blue",
+      "status": "公开测试中",
+      "url": "https://exist.qd.je/",
+      "description": "利用碎片时间读一道面试题。公开资料免登录，笔记与复习记录需登录。",
+      "action": "去刷一道题"
+    }
+  ]
 }

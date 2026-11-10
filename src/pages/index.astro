@@ -10,7 +10,7 @@ import { withBase } from '../utils/url';
 import homeData from '../content/site/home.json';
 const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
 const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order);
-const selectedProjects = projects.filter((entry) => ['weijin', 'interview-bank', 'gleaner', 'medstatforge'].includes(entry.slug));
+const selectedProjects = projects.filter((entry) => ['pixelcampus', 'weijin', 'interview-bank', 'gleaner'].includes(entry.slug));
 const topics = getAllTopics(notes);
 ---
 <BaseLayout>
@@ -40,16 +40,20 @@ const topics = getAllTopics(notes);
     </aside>
   </section>
 
-  <section class="container product-strip" aria-label="在线项目">
-    <span class="product-symbol" aria-hidden="true">IB</span>
-    <div><div class="product-title"><h2>Interview Bank 在线版</h2><span class="small-badge">公开测试中</span></div><p>利用碎片时间读一道面试题。公开资料免登录，个人笔记与复习记录需登录。</p></div>
-    <a class="button ghost" href={homeData.onlineProduct.url} target="_blank" rel="noreferrer">去刷一道题</a>
+  <section class="container product-grid" aria-label="在线项目">
+    {homeData.onlineProducts.map((product) => (
+      <article class:list={['product-strip', `product-${product.tone}`]}>
+        <span class="product-symbol" aria-hidden="true">{product.symbol}</span>
+        <div><div class="product-title"><h2>{product.name}</h2><span class="small-badge">{product.status}</span></div><p>{product.description}</p></div>
+        <a class="button ghost" href={product.url} target="_blank" rel="noreferrer">{product.action}</a>
+      </article>
+    ))}
   </section>
 
   <section class="section container" id="recent-projects">
     <header class="section-header"><div><span class="section-icon"><Icon name="code" /></span><h2>{homeData.projectSection.title}</h2><span class="count-badge">{projects.length}</span></div><a class="text-link" href={withBase('/projects')}>全部项目 <Icon name="arrow" size={16} /></a></header>
     <div class="project-grid">{selectedProjects.map((project) => <ProjectCard project={project} />)}</div>
-    <div class="more-projects"><span>还有一些实践</span><a href={withBase('/projects/medical-analysis-orchestrator')}>医学分析编排</a><a href={withBase('/projects/spss-academic-workflow')}>SPSS Workflow</a><a href={withBase('/projects/floatnote')}>FloatNote</a></div>
+    <div class="more-projects"><span>还有一些实践</span><a href={withBase('/projects/medstatforge')}>MedStatForge</a><a href={withBase('/projects/medical-analysis-orchestrator')}>医学分析编排</a><a href={withBase('/projects/spss-academic-workflow')}>SPSS Workflow</a><a href={withBase('/projects/floatnote')}>FloatNote</a></div>
   </section>
 
   <section class="section container home-writing">
@@ -59,7 +63,7 @@ const topics = getAllTopics(notes);
     </div>
     <aside class="home-sidebar">
       <div class="sidebar-panel"><h2><Icon name="tag" size={18} />按主题阅读</h2><div class="topic-cloud">{topics.map((topic) => <a class="topic-link" href={withBase(`/topics/${topic.slug}`)}>{topic.name}<small>{topic.count}</small></a>)}</div><a class="text-link" href={withBase('/topics')}>全部专题 <Icon name="arrow" size={15} /></a></div>
-      <div class="sidebar-panel about-snippet"><h2>关于我</h2><p>{homeData.aboutSection.summary}</p><div class="stat-grid-compact"><span><strong>{projects.length}</strong>开源项目</span><span><strong>{notes.length}</strong>公开笔记</span><span><strong>{topics.length}</strong>阅读主题</span></div><a class="text-link" href={withBase('/about')}>关于我的更多信息 <Icon name="arrow" size={15} /></a></div>
+      <div class="sidebar-panel about-snippet"><h2>关于我</h2><p>{homeData.aboutSection.summary}</p><div class="stat-grid-compact"><span><strong>{projects.length}</strong>项目作品</span><span><strong>{notes.length}</strong>公开笔记</span><span><strong>{topics.length}</strong>阅读主题</span></div><a class="text-link" href={withBase('/about')}>关于我的更多信息 <Icon name="arrow" size={15} /></a></div>
     </aside>
   </section>
 </BaseLayout>

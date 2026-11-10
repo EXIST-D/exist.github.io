@@ -7,6 +7,7 @@ interface Props { project: CollectionEntry<'projects'>; }
 const { project } = Astro.props;
 const category = projectCategories.find((item) => item.id === project.data.category)?.label;
 const badges: Record<string, { text: string; tone: string }> = {
+  pixelcampus: { text: '像', tone: 'green' },
   weijin: { text: '未', tone: 'blue' },
   'interview-bank': { text: 'IB', tone: 'orange' },
   gleaner: { text: 'G', tone: 'green' },
